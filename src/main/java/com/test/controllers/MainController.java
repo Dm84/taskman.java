@@ -28,7 +28,7 @@ class MainController {
 	public ModelAndView index() {
 		
 		//logs debug message
-		if(logger.isDebugEnabled()){
+		if(logger.isDebugEnabled()) {
 			logger.debug("getWelcome is executed!");
 		}	
 		
