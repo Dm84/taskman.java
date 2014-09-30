@@ -12,10 +12,7 @@
  		http://www.springframework.org/schema/mvc
         http://www.springframework.org/schema/mvc/spring-mvc.xsd">
  
- 	<mvc:annotation-driven />         
-	<context:component-scan base-package="com.test.controllers" />
  
-  
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix">
@@ -26,7 +23,27 @@
 		</property>
 	</bean>
 
-<!-- 	
+	<bean id="taskDao" class="com.test.dao.TaskDao">
+	</bean>
+		
+	<bean id="taskService" class="com.test.service.TaskService">
+		<qualifier value="taskService"/>
+		<constructor-arg ref="taskDao"/>
+	</bean>
+		
+ 	<mvc:annotation-driven />         
+	<context:component-scan base-package="com.test.controllers" />
+
+		
+
+<!--
+	<bean class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"/>	
+
+	<bean name="/task/*" id="taskController" class="com.test.controllers.TaskController">
+		<constructor-arg ref="taskDao"/>
+	</bean>
+
+ 	
 	<bean class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"/>	
 	<bean name="/main*" class="com.test.controllers.MainController" />
  -->				
