@@ -2,15 +2,27 @@ package com.test.dao;
 
 import java.util.Map;
 
+import javax.transaction.Transactional;
+
+import org.springframework.stereotype.*;
 import org.hibernate.SessionFactory;
+import org.hibernate.Session;
 
 import com.test.domain.Task;
+import org.springframework.transaction.annotation.*;
 
-
+@Repository
+@EnableTransactionManagement
 class TaskDao implements ITaskDao {
 	
-	TaskDao() {
-		
+	private SessionFactory factory;
+	
+	TaskDao(SessionFactory factory) {
+		this.factory = factory;
+	}
+	
+	private Session getSession() {
+		return this.factory.getCurrentSession();
 	}
 	
 	public void complete(Integer id) {
@@ -19,8 +31,8 @@ class TaskDao implements ITaskDao {
 	}
 	
 	public void create(Task task) {
-		// TODO Auto-generated method stub
-		
+		Session session = getSession();
+		getSession().save(task);
 	}
 	
 	public Map<Integer, Task> listAll() {

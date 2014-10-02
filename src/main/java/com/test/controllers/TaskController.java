@@ -37,10 +37,10 @@ public class TaskController {
 	}
 		
 	@RequestMapping("/task/create")
-	public String createTask(@ModelAttribute Task task) {
+	public Task createTask(@ModelAttribute Task task) {
 		
 		service.create(task);
-		return "{ result: \"ok\" }";
+		return task;
 	}
 	
 }

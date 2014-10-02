@@ -11,7 +11,7 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>3.8.1</version>
+      <version>4.11</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -41,13 +41,58 @@
     </dependency>
     <dependency>
     	<groupId>org.hibernate.javax.persistence</groupId>
-    	<artifactId>hibernate-jpa-2.0-api</artifactId>
-    	<version>1.0.1.Final</version>
+    	<artifactId>hibernate-jpa-2.1-api</artifactId>
+    	<version>1.0.0.Final</version>
     </dependency>
+    <dependency>
+    	<groupId>org.springframework</groupId>
+    	<artifactId>spring-orm</artifactId>
+    	<version>${spring.version}</version>
+    </dependency>
+    <dependency>
+    	<groupId>mysql</groupId>
+    	<artifactId>mysql-connector-java</artifactId>
+    	<version>5.1.30</version>
+    </dependency>
+    <dependency>
+    	<groupId>org.eclipse.persistence</groupId>
+    	<artifactId>javax.persistence</artifactId>
+    	<version>2.1.0</version>
+    </dependency>
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-tx</artifactId>
+		<version>${spring.version}</version>
+	</dependency>
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-jdbc</artifactId>
+		<version>${spring.version}</version>
+	</dependency>	
+	<dependency>
+		<groupId>com.fasterxml.jackson.core</groupId>
+		<artifactId>jackson-databind</artifactId>
+		<version>2.4.2</version>
+	</dependency>    
   </dependencies>
   <build>
     <finalName>artifact</finalName>
   </build>
+  
+	<repositories>
+	       <repository>
+	           <id>spring-releases</id>
+	           <url>http://repo.spring.io/libs-release</url>
+	       </repository>
+	   </repositories>
+	   <pluginRepositories>
+	       <pluginRepository>
+	           <id>spring-releases</id>
+	           <url>http://repo.spring.io/libs-release</url>
+	       </pluginRepository>
+	   </pluginRepositories>
+    
+      
   <properties>
   	<spring.version>4.1.0.RELEASE</spring.version>
   	<log4j.version>1.2.17</log4j.version>
