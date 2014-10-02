@@ -3,10 +3,7 @@ package com.test.controllers;
 import java.sql.Timestamp;
 
 import org.junit.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 
-import com.test.service.TaskService;
 import com.test.domain.*;
 
 import org.springframework.context.ApplicationContext;
@@ -24,15 +21,14 @@ public class TaskControllerTest {
 	}
 	
 	@Test
-	public void create() {
-		
+	public void add() {		
 		Task testTask = new Task();
 		
 		testTask.setDescription("test desc");
 		testTask.setDeadline(new Timestamp(777));
-		testTask.setCompleteness(false);
+		testTask.setCompleted(false);
 		
-		controller.createTask(testTask);
+		controller.add(testTask);
 	}
 	
 }

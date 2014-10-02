@@ -9,7 +9,7 @@ public class Task {
     @Id
     @Column(name="id")
     @GeneratedValue
-    private Integer id;	
+    private Integer id = 0;	
 	
     @Column(name="description")
 	private String description;
@@ -17,8 +17,13 @@ public class Task {
     @Column(name="deadline")
     private java.sql.Timestamp deadline;
     
-    @Column(name="completeness")
-    private boolean completeness;
+    @Column(name="completed")
+    private boolean completed = false;
+    
+    public Task() {
+    	java.util.Date now = new java.util.Date();
+    	deadline = new java.sql.Timestamp(now.getTime());    	
+    }
 
 	public Integer getId() {
 		return id;
@@ -44,12 +49,12 @@ public class Task {
 		this.deadline = deadline;
 	}
 
-	public boolean isCompleteness() {
-		return completeness;
+	public boolean isCompleted() {
+		return completed;
 	}
 
-	public void setCompleteness(boolean completeness) {
-		this.completeness = completeness;
+	public void setCompleted(boolean completed) {
+		this.completed = completed;
 	} 
 	
 }

@@ -1,11 +1,11 @@
 package com.test.service;
 
-import javax.transaction.Transactional;
-
 import com.test.dao.*;
 import com.test.domain.*;
 
 import org.springframework.stereotype.*;
+
+import java.util.Map;
 
 @Service
 public class TaskService {
@@ -20,8 +20,15 @@ public class TaskService {
 	 * Создает и сохраняет задание
 	 * @param task
 	 */
-	@Transactional
-	public void create(Task task) {
-		taskDao.create(task);
+	public int add(Task task) {
+		return taskDao.create(task);
+	}
+	
+	public void complete(Integer id) {
+		taskDao.complete(id);
+	}
+	
+	public Map<Integer, Task> listAll() {
+		return taskDao.listAll();
 	}
 }

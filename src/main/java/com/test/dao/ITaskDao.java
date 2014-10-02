@@ -1,12 +1,12 @@
 package com.test.dao;
 
-import java.util.*;
+import java.util.Map;
 
 import com.test.domain.Task;
 
 public interface ITaskDao {	
 	
-	public void create(Task task);
+	public int create(Task task);
 	public void complete(Integer id);
 	
 	public Map<Integer, Task> listAll();	

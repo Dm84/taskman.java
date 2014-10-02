@@ -20,6 +20,8 @@ import javax.annotation.Resource;
 import com.test.domain.Task;
 import com.test.service.TaskService;
 
+
+
 @RestController
 public class TaskController {
 
@@ -37,10 +39,25 @@ public class TaskController {
 	}
 		
 	@RequestMapping("/task/create")
-	public Task createTask(@ModelAttribute Task task) {
-		
-		service.create(task);
-		return task;
+	public String add(@ModelAttribute Task task) {		
+		service.add(task);
+		return "{ response: \"ok\" }";
+	}
+	
+	@RequestMapping("/task/{id}/complete")
+	public String complete(Integer id) {
+		service.complete(id);
+		return "{ response: \"ok\" }";
+	}
+
+	@RequestMapping("/task/list")
+	public String list() {		
+		service.listAll();
+		return "{ response: \"ok\" }";
+	}
+	
+	class Response {
+		public Object response;
 	}
 	
 }
