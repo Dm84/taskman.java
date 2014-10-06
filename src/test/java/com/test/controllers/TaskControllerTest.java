@@ -20,7 +20,6 @@ public class TaskControllerTest {
 		controller = appContext.getBean("taskController", TaskController.class);   
 	}
 	
-	@Test
 	public void add() {		
 		Task testTask = new Task();
 		
