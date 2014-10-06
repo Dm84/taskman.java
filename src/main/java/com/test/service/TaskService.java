@@ -17,7 +17,7 @@ public class TaskService {
 	}
 	
 	/**
-	 * Создает и сохраняет задание
+	 * Р”РѕР±Р°РІР»СЏРµС‚ Р·Р°РґР°РЅРёРµ
 	 * @param task
 	 */
 	public int add(Task task) {

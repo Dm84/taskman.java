@@ -11,11 +11,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 
 import org.apache.log4j.Logger;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import javax.annotation.Resource;
-
 import com.test.domain.Task;
 import com.test.service.TaskService;
 
