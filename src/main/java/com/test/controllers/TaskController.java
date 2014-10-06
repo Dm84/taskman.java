@@ -16,11 +16,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import javax.annotation.Resource;
 
-
 import com.test.domain.Task;
 import com.test.service.TaskService;
-
-
 
 @RestController
 public class TaskController {
