@@ -28,7 +28,7 @@ public class TaskServiceTest {
 		testTask.setDescription("test desc");		
 		
 		int id = service.add(testTask);		
-		Assert.assertNotEquals(id,  0);
+		Assert.assertNotEquals(id, 0);
 	}
 	
 	@Test
