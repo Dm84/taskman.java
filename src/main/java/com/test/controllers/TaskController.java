@@ -42,7 +42,7 @@ public class TaskController {
 	}
 	
 	@RequestMapping("/task/{id}/complete")
-	public String complete(Integer id) {
+	public String complete(@PathVariable Integer id) {
 		service.complete(id);
 		return "{}";
 	}
