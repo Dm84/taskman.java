@@ -33,25 +33,23 @@ public class TaskController {
 	@RequestMapping("/task/create")
 	public String add(@ModelAttribute Task task) {		
 		service.add(task);
-		return "{ response: \"ok\" }";
+		return "{}";
 	}
 	
 	@RequestMapping("/task/search")
-	public String search(String query) {
-		service.find(query);
-		return "{ response: \"ok\" }";
+	public java.util.Map<Integer, Task> search(String query) {
+		return service.find(query);
 	}
 	
 	@RequestMapping("/task/{id}/complete")
 	public String complete(Integer id) {
 		service.complete(id);
-		return "{ response: \"ok\" }";
+		return "{}";
 	}
 
 	@RequestMapping("/task/list")
-	public String list() {		
-		service.listAll();
-		return "{ response: \"ok\" }";
+	public java.util.Map<Integer, Task> list() {		
+		return service.listAll();
 	}
 	
 	class Response {
