@@ -1,14 +1,14 @@
 package com.test.controllers;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractController;
-
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-
 import org.apache.log4j.Logger;
 
 import com.test.domain.Task;
@@ -50,6 +50,12 @@ public class TaskController {
 	@RequestMapping("/task/list")
 	public java.util.Map<Integer, Task> list() {		
 		return service.listAll();
+	}
+	
+	@ExceptionHandler(Exception.class)
+	public String handleError(HttpServletRequest req, Exception exception) {
+		
+		return "{ error: \"" + exception.getMessage() + "\" }";
 	}
 	
 	class Response {
