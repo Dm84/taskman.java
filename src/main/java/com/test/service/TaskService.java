@@ -25,11 +25,28 @@ public class TaskService {
 		return taskDao.create(task);
 	}
 
+	/**
+	 * Завершить задачу
+	 * @param id
+	 */
 	public void complete(Integer id) {
 		taskDao.complete(id);
 	}
 
+	/**
+	 * Перечислить задачи
+	 * @return
+	 */
 	public Map<Integer, Task> listAll() {
 		return taskDao.listAll();
+	}
+
+	/**
+	 * Найти задачи по части описания
+	 * @param query
+	 * @return
+	 */
+	public Map<Integer, Task> find(String query) {
+		return taskDao.find(query);
 	}
 }

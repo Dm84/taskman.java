@@ -10,6 +10,7 @@ import java.util.Collections;
 import org.springframework.stereotype.*;
 import org.hibernate.SessionFactory;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.transaction.annotation.*;
 
 import com.test.domain.Task;
@@ -38,11 +39,15 @@ class TaskDao implements ITaskDao {
 	public int create(Task task) {		
 		getSession().save(task);	
 		return task.getId();
-	}
+	}	
 	
-	public Map<Integer, Task> listAll() {		
-		Map<Integer, Task> map = new HashMap<Integer, Task>();		
-		ListIterator iter = getSession().createCriteria(Task.class).list().listIterator();		
+	/**
+	 * Индексирует список задач
+	 * @param iter
+	 * @return
+	 */
+	private Map<Integer, Task> IndexList(ListIterator iter) {
+		Map<Integer, Task> map = new HashMap<Integer, Task>();
 		while (iter.hasNext()) {			
 			Object obj = iter.next();			
 			if (obj instanceof Task)
@@ -50,7 +55,18 @@ class TaskDao implements ITaskDao {
 				Task item = (Task)obj;
 				map.put(item.getId(), item);
 			}			
-		}
+		}		
 		return map;
+	}
+	
+	public Map<Integer, Task> listAll() {		
+		List taskList = getSession().createCriteria(Task.class).list();		
+		return IndexList(taskList.listIterator());
+	}	
+	
+	public Map<Integer, Task> find(String query) {		
+		List taskList = getSession().createCriteria(Task.class).add(
+				Restrictions.like("description", "%" + query + "%")).list();
+		return IndexList(taskList.listIterator());		
 	}
 }

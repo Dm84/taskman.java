@@ -36,6 +36,12 @@ public class TaskController {
 		return "{ response: \"ok\" }";
 	}
 	
+	@RequestMapping("/task/search")
+	public String search(String query) {
+		service.find(query);
+		return "{ response: \"ok\" }";
+	}
+	
 	@RequestMapping("/task/{id}/complete")
 	public String complete(Integer id) {
 		service.complete(id);
