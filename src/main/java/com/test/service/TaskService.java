@@ -6,6 +6,7 @@ import com.test.domain.*;
 import org.springframework.stereotype.*;
 
 import java.util.Map;
+import java.util.List;
 
 @Service
 public class TaskService {
@@ -37,8 +38,8 @@ public class TaskService {
 	 * Перечислить задачи
 	 * @return
 	 */
-	public Map<Integer, Task> listAll() {
-		return taskDao.listAll();
+	public List findAll() {
+		return taskDao.findAll();
 	}
 
 	/**
@@ -46,7 +47,7 @@ public class TaskService {
 	 * @param query
 	 * @return
 	 */
-	public Map<Integer, Task> find(String query) {
+	public List find(String query) {
 		return taskDao.find(query);
 	}
 }

@@ -59,14 +59,12 @@ class TaskDao implements ITaskDao {
 		return map;
 	}
 	
-	public Map<Integer, Task> listAll() {		
-		List taskList = getSession().createCriteria(Task.class).list();		
-		return IndexList(taskList.listIterator());
+	public List findAll() {		
+		return getSession().createCriteria(Task.class).list();
 	}	
 	
-	public Map<Integer, Task> find(String query) {		
-		List taskList = getSession().createCriteria(Task.class).add(
+	public List find(String query) {		
+		return getSession().createCriteria(Task.class).add(
 				Restrictions.like("description", "%" + query + "%")).list();
-		return IndexList(taskList.listIterator());		
 	}
 }

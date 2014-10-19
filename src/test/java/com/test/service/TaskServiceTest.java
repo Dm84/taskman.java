@@ -38,13 +38,13 @@ public class TaskServiceTest {
 	
 	@Test
 	public void listAll() {
-		java.util.Map<Integer, Task> tasks = service.listAll();		
+		java.util.List tasks = service.findAll();		
 		Assert.assertNotEquals(tasks.size(), 0);
 	}
 	
 	@Test
 	public void find() {
-		java.util.Map<Integer, Task> tasks = service.find("esc");		
+		java.util.List tasks = service.find("esc");		
 		Assert.assertNotEquals(tasks.size(), 0);
 	}
 }

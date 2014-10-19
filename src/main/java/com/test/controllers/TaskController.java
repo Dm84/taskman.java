@@ -13,6 +13,7 @@ import org.apache.log4j.Logger;
 
 import com.test.domain.Task;
 import com.test.service.TaskService;
+import java.util.List;
 
 @RestController
 public class TaskController {
@@ -37,7 +38,7 @@ public class TaskController {
 	}
 	
 	@RequestMapping("/task/search")
-	public java.util.Map<Integer, Task> search(String query) {
+	public List search(String query) {
 		return service.find(query);
 	}
 	
@@ -48,8 +49,8 @@ public class TaskController {
 	}
 
 	@RequestMapping("/task/list")
-	public java.util.Map<Integer, Task> list() {		
-		return service.listAll();
+	public List list() {		
+		return service.findAll();
 	}
 	
 	@ExceptionHandler(Exception.class)
