@@ -24,7 +24,7 @@ public class TaskControllerTest {
 		Task testTask = new Task();
 		
 		testTask.setDescription("test desc");
-		testTask.setDeadline(new Timestamp(777));
+		testTask.setDeadline(777);
 		testTask.setCompleted(false);
 		
 		controller.add(testTask);

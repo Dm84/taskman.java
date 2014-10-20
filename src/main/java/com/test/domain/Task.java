@@ -1,6 +1,7 @@
 package com.test.domain;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 
 @Entity
 @Table(name="task")
@@ -12,19 +13,16 @@ public class Task {
     private Integer id = 0;	
 	
     @Column(name="description")
-	private String description;
+    @NotNull
+	private String description;    
     
     @Column(name="deadline")
-    private java.sql.Timestamp deadline;
+    @Future
+    private java.util.Date deadline;
     
     @Column(name="completed")
     private boolean completed = false;
     
-    public Task() {
-    	java.util.Date now = new java.util.Date();
-    	deadline = new java.sql.Timestamp(now.getTime());    	
-    }
-
 	public Integer getId() {
 		return id;
 	}
@@ -41,12 +39,12 @@ public class Task {
 		this.description = description;
 	}
 
-	public java.sql.Timestamp getDeadline() {
+	public java.util.Date getDeadline() {
 		return deadline;
 	}
 
-	public void setDeadline(java.sql.Timestamp deadline) {
-		this.deadline = deadline;
+	public void setDeadline(long deadline) {
+		this.deadline = new java.sql.Timestamp(deadline);
 	}
 
 	public boolean isCompleted() {

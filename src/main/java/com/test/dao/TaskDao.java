@@ -30,12 +30,18 @@ class TaskDao implements ITaskDao {
 		return this.factory.getCurrentSession();
 	}
 	
+	/**
+	 * Помечает задачу как завершенную
+	 */
 	public void complete(Integer id) {
 		Task task = (Task) getSession().byId(Task.class).getReference(id);
 		task.setCompleted(true);
 		getSession().update(task);
 	}
 	
+	/**
+	 * Сохраняет новую задачу
+	 */
 	public int create(Task task) {		
 		getSession().save(task);	
 		return task.getId();
@@ -59,10 +65,20 @@ class TaskDao implements ITaskDao {
 		return map;
 	}
 	
+	/**
+	 * Возвращает список всех задач
+	 * @return
+	 */
 	public List findAll() {		
 		return getSession().createCriteria(Task.class).list();
 	}	
 	
+	/**
+	 * Ищет задачи по части описания
+	 * 
+	 * @param query
+	 * @return
+	 */
 	public List find(String query) {		
 		return getSession().createCriteria(Task.class).add(
 				Restrictions.like("description", "%" + query + "%")).list();

@@ -13,6 +13,7 @@ import com.test.domain.Task;
 public class TaskServiceTest {
 	
 	final private int testId = 1;
+	final private long deadline = 1445299200000l;
 	
 	private ApplicationContext appContext;
 	private TaskService service;
@@ -25,7 +26,8 @@ public class TaskServiceTest {
 	@Test
 	public void add() {		
 		Task testTask = new Task();		
-		testTask.setDescription("test desc");		
+		testTask.setDescription("test desc");
+		testTask.setDeadline(deadline);
 		
 		int id = service.add(testTask);		
 		Assert.assertNotEquals(id, 0);
