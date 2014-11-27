@@ -32,7 +32,7 @@ class TaskDao implements ITaskDao {
 	
 	/**
 	 * Помечает задачу как завершенную
-	 */
+	 */	
 	public void complete(Integer id) {
 		Task task = (Task) getSession().byId(Task.class).getReference(id);
 		task.setCompleted(true);
