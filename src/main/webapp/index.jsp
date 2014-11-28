@@ -9,7 +9,7 @@
 </head>
 <body>
 
-	<script type="text/text-plain" id="task-item-template">
+	<script type="text/x-handlerbars-template" id="task-item-template">
 		
 			{{description}}
 			<div class="task-date">
@@ -17,14 +17,8 @@
 			</div>
 		
 	</script>
-
-
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-6 col-lg-offset-3">			
-				<div id="content">
-
-					<div class="header">
+	
+	<script type="text/x-handlerbars-template">
 						<div class="search-entry">
 							<input type="text" class="entry"/>							
 						</div>
@@ -66,7 +60,15 @@
 								</div>
 							</div>
 						</div>
-					</div>
+	</script>
+
+
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-6 col-lg-offset-3">			
+				<div id="content">
+					<div class="header" id="header">
+					</div>					
 					<div id="task-list" class="task-list">
 						<div class="task-item">
 								Редактирование задач из списка и поиска

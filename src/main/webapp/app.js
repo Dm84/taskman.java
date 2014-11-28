@@ -17,8 +17,8 @@ define(	['jquery', 'backbone', 'marionette', 'handlebars'],
 		
 		var app = new Backbone.Marionette.Application();
  
-		app.addRegions({tasksRegion: "#task-list"});
-		
+		app.addRegions({tasksRegion: "#task-list", headerRegion: '#header'});
+				
 		Handlebars.registerHelper('dateFormat', function(date) {
 			
 			function pad(n, width, z) {
@@ -33,7 +33,7 @@ define(	['jquery', 'backbone', 'marionette', 'handlebars'],
 					pad(date.getHours(), 2) + ":" + pad(date.getMinutes(), 2);
 		});
 		
-		app.TaskModel = Backbone.Model.extend({});
+		app.TaskModel = Backbone.Model.extend({});		
 		
 		app.TaskListModel = Backbone.Collection.extend({			
 			model: app.TaskModel,
@@ -70,11 +70,15 @@ define(	['jquery', 'backbone', 'marionette', 'handlebars'],
 					}
 				}
 			}
-		});
+		});		
 		
 		app.TaskListView = Marionette.CollectionView.extend({
 			childView: app.TaskItemView
-		});		
+		});
+		
+		app.TaskHeaderView = Marionette.CompositeView.extend({
+			template: '#header-template'
+		});
 		
 		app.on("start", function () {
 			      
