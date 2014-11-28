@@ -45,25 +45,28 @@ define(	['jquery', 'backbone', 'marionette', 'handlebars'],
 			template: '#task-item-template',
 			tagName: 'div class="task-item"',
 			
-			initialize: function () {
+			onRender: function () {
 				var now = new Date(), nowMs = now.getTime(), 
 					deadlineMs = this.model.get('deadline'), 
 					deadlineDate = new Date(deadlineMs),
 					overdue = nowMs - deadlineMs;					
 				
+				var $dateEl = $('.task-date', this.$el);
+				console.log(this.$el.html());
+				
 				if (overdue > 0) {
 					if (this.model.get('complete') === true) {
-						this.$el.addClass('task-item_status_completed_with_overdue');
+						$dateEl.addClass('task-date_status_completed_with_overdue');
 					} else {						
-						this.$el.addClass('task-item_status_overdue');	
+						$dateEl.addClass('task-date_status_overdue');	
 					}					
 				} else
 				{
 					var dayPeriodMs = 24 * 60 * 1000;
 					if (-overdue < dayPeriodMs) {
-						this.$el.addClass('task-item_status_todo');
+						$dateEl.addClass('task-date_status_todo');
 					} else {
-						this.$el.addClass('task-item_status_future');
+						$dateEl.addClass('task-date_status_future');
 					}
 				}
 			}

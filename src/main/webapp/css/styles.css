@@ -124,3 +124,19 @@
 	font-size: 13px;
 }
 
+.task-date_status_complete {
+	color: #9ec54d
+}
+
+.task-date_status_todo {
+	color: #61acec	
+}
+
+.task-date_status_overdue {
+	color: #e55c9a
+}
+
+.task-date_status_future {
+	color: #b8b8b8
+}
+
