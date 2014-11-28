@@ -4,6 +4,8 @@ define(	['jquery', 'backbone', 'marionette', 'handlebars'],
 
 	return function () {
 
+		
+		
 		Marionette.TemplateCache.prototype.compileTemplate = function (rawTemplate) {
 
 		    // Mustache.parse will not return anything useful (returns an array)
@@ -16,7 +18,8 @@ define(	['jquery', 'backbone', 'marionette', 'handlebars'],
 		};
 		
 		var app = new Backbone.Marionette.Application();
- 
+		
+		app.endpointUrl = '/artifact/endpoint/task'; 
 		app.addRegions({tasksRegion: "#task-list", headerRegion: '#header'});
 				
 		Handlebars.registerHelper('dateFormat', function(date) {
@@ -35,9 +38,20 @@ define(	['jquery', 'backbone', 'marionette', 'handlebars'],
 		
 		app.TaskModel = Backbone.Model.extend({});		
 		
-		app.TaskListModel = Backbone.Collection.extend({			
-			model: app.TaskModel,
-			url: '/artifact/endpoint/task/list',
+		app.TaskListModel = Backbone.Collection.extend({
+			
+//			defaults: {
+//				url: app.endpointUrl + '/list'
+//			},
+			
+			initialize: function (models, options) {
+				
+				console.log(options);
+				if (typeof options['url'] !== undefined) 
+					this.url = options['url'];
+			},
+			
+			model: app.TaskModel,			
 			urlRoot: 'http://localhost:8080',
 		});
 
@@ -52,7 +66,6 @@ define(	['jquery', 'backbone', 'marionette', 'handlebars'],
 					overdue = nowMs - deadlineMs;					
 				
 				var $dateEl = $('.task-date', this.$el);
-				console.log(this.$el.html());
 				
 				if (overdue > 0) {
 					if (this.model.get('complete') === true) {
@@ -76,17 +89,39 @@ define(	['jquery', 'backbone', 'marionette', 'handlebars'],
 			childView: app.TaskItemView
 		});
 		
-		app.TaskHeaderView = Marionette.CompositeView.extend({
-			template: '#header-template'
+		app.HeaderView = Marionette.CompositeView.extend({
+			template: '#header-template',
+			childView: app.TaskItemView,
+			childViewContainer: ".task-list_block_search",
+			
+			events: {
+				"keyup input.entry": function (e) {
+					this.collection.fetch({
+						url: this.collection.url + '?query=' + $(e.target).val()
+					});					
+				},
+				"focus input.entry": function (e) {
+					this.$el.find('.task-list-popup').fadeIn();
+				},
+				"blur input.entry": function (e) {
+					this.$el.find('.task-list-popup').fadeOut();
+				}
+			}
 		});
 		
 		app.on("start", function () {
 			      
-			var taskList = new app.TaskListModel();			
+			var taskList = new app.TaskListModel([], {url: app.endpointUrl + '/list'});			
 			taskList.fetch();
 			
+			var searchTaskList = new app.TaskListModel([], {url: app.endpointUrl + '/search'});
+			console.log(searchTaskList.url);
+			
 			var listView = new app.TaskListView({ collection: taskList });
+			var headerView = new app.HeaderView({ collection: searchTaskList});
+			
 			app.tasksRegion.show(listView);
+			app.headerRegion.show(headerView);
 		});
 		
 		app.start();

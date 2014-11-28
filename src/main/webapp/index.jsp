@@ -18,13 +18,19 @@
 		
 	</script>
 	
-	<script type="text/x-handlerbars-template">
+	<script type="text/x-handlerbars-template" id="header-template">
 						<div class="search-entry">
 							<input type="text" class="entry"/>							
 						</div>
-
-						<div class="task-list-popup">
+						<div class="task-list-popup" style="display: none">
 							<div class="task-list task-list_block_search">
+							</div>
+						</div>
+	</script>
+
+	<script type="text/x-handlerbars-template" id="search-item-template">
+
+							
 								<div class="task-item_block_search task-item_block_search task-item_state_active">
 									Редактирование <span class="item-match"> задач</span> из списка и поиска
 									<div class="task-date_block_search task-date_block_search">
@@ -58,10 +64,8 @@
 										21.03.2014 17:00
 									</div>						
 								</div>
-							</div>
-						</div>
+	
 	</script>
-
 
 	<div class="container">
 		<div class="row">
