@@ -1,15 +1,9 @@
-define(	['jquery', 'backbone', 'marionette', 'mustache'], 
-		function ($, Backbone, Marionette, Mustache)
+define(	['jquery', 'backbone', 'marionette', 'handlebars'], 
+		function ($, Backbone, Marionette, Handlebars)
 {
 
 	return function () {
 
-//		Marionette.TemplateCache.prototype.loadTemplate = function (templateId) {
-//		    // Semi-implement original function (removed error handling for berevity)
-//		    var template = $(templateId).html();		    
-//		    return template;
-//		}
-		
 		Marionette.TemplateCache.prototype.compileTemplate = function (rawTemplate) {
 
 		    // Mustache.parse will not return anything useful (returns an array)
@@ -17,45 +11,29 @@ define(	['jquery', 'backbone', 'marionette', 'mustache'],
 		    // so instead pass a partial of Mustache.render 
 		    // with rawTemplate as the initial parameter.
 
-		    // Additionally Mustache.compile no longer exists so we must use parse.
-		    Mustache.parse(rawTemplate);
-		    return _.partial(Mustache.render, rawTemplate);
+		    // Additionally Mustache.compile no longer exists so we must use parse.		    
+		    return Handlebars.compile(rawTemplate);
 		};
 		
 		var app = new Backbone.Marionette.Application();
  
-		app.addRegions({taskListRegion: "#task-list"});
+		app.addRegions({tasksRegion: "#task-list"});
 		
-		
-		app.TaskModel = Backbone.Model.extend({
+		Handlebars.registerHelper('dateFormat', function(date) {
 			
-			defaults: {
-				dateFormatted: ''
-			},
-			
-			id: '0',
-			description: '',
-			completed: false,
-			deadline: 0,
-			date_formatted: '',
-			
-			initialize: function () {
-				console.log(this.date_formatted);
-			},
-			
-			set: function (attributes, options) {
-				
-				if (attributes['deadline'] !== 'undefined') {
-					this.formatDeadline(attributes['deadline']);
-				}
-				Backbone.Model.prototype.set.call(this, attributes, options);
-			},			
-			
-			formatDeadline: function (deadline) {
-				var date = new Date(deadline);				
-				this.date_formatted = date.toString();
+			function pad(n, width, z) {
+				  z = z || '0';
+				  n = n + '';
+				  return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
 			}
+			
+			var date = new Date(date);
+			return	pad(date.getDay(), 2) + "." + pad(date.getMonth(), 2) + "." + 
+					date.getFullYear() + " " + 
+					pad(date.getHours(), 2) + ":" + pad(date.getMinutes(), 2);
 		});
+		
+		app.TaskModel = Backbone.Model.extend({});
 		
 		app.TaskListModel = Backbone.Collection.extend({			
 			model: app.TaskModel,
@@ -64,21 +42,44 @@ define(	['jquery', 'backbone', 'marionette', 'mustache'],
 		});
 
 		app.TaskItemView = Marionette.ItemView.extend({
-			template: '#task-item-template'
+			template: '#task-item-template',
+			tagName: 'div class="task-item"',
+			
+			initialize: function () {
+				var now = new Date(), nowMs = now.getTime(), 
+					deadlineMs = this.model.get('deadline'), 
+					deadlineDate = new Date(deadlineMs),
+					overdue = nowMs - deadlineMs;					
+				
+				if (overdue > 0) {
+					if (this.model.get('complete') === true) {
+						this.$el.addClass('task-item_status_completed_with_overdue');
+					} else {						
+						this.$el.addClass('task-item_status_overdue');	
+					}					
+				} else
+				{
+					var dayPeriodMs = 24 * 60 * 1000;
+					if (-overdue < dayPeriodMs) {
+						this.$el.addClass('task-item_status_todo');
+					} else {
+						this.$el.addClass('task-item_status_future');
+					}
+				}
+			}
 		});
 		
 		app.TaskListView = Marionette.CollectionView.extend({
-			childView: app.TaskItemView,			
+			childView: app.TaskItemView
 		});		
 		
 		app.on("start", function () {
 			      
-			var taskList = new app.TaskListModel();
-			
+			var taskList = new app.TaskListModel();			
 			taskList.fetch();
 			
 			var listView = new app.TaskListView({ collection: taskList });
-			app.taskListRegion.show(listView);
+			app.tasksRegion.show(listView);
 		});
 		
 		app.start();

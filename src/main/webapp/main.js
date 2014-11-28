@@ -18,6 +18,7 @@ requirejs.config({
 
 		jquery: 'http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery',
 //		backbone: 'http://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone',
+		handlebars: 'http://cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0/handlebars',
 		backbone: 'js/backbone',
 		underscore: 'http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore',
 		bootstrap: 'js/bootstrap',

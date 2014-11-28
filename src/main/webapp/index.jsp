@@ -9,20 +9,20 @@
 </head>
 <body>
 
-	<script type="text/template" id="task-item-template">
-		<div class="task-item">
-				{{description}}
+	<script type="text/text-plain" id="task-item-template">
+		
+			{{description}}
 			<div class="task-date">
-				{{date_formatted}}
+				{{dateFormat deadline}}
 			</div>
-		</div>
+		
 	</script>
 
 
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-6 col-lg-offset-3">			
-				<div class="content">
+				<div id="content">
 
 					<div class="header">
 						<div class="search-entry">
@@ -74,7 +74,6 @@
 								21.03.2014 17:00
 							</div>
 						</div>
-
 					</div>
 
 
