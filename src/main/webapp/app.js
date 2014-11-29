@@ -1,19 +1,8 @@
 define(	['jquery', 'backbone', 'marionette', 'handlebars'], 
 		function ($, Backbone, Marionette, Handlebars)
 {
-
-	return function () {
-
-		
-		
+	return function () {		
 		Marionette.TemplateCache.prototype.compileTemplate = function (rawTemplate) {
-
-		    // Mustache.parse will not return anything useful (returns an array)
-		    // The render function from Marionette.Renderer.render expects a function
-		    // so instead pass a partial of Mustache.render 
-		    // with rawTemplate as the initial parameter.
-
-		    // Additionally Mustache.compile no longer exists so we must use parse.		    
 		    return Handlebars.compile(rawTemplate);
 		};
 		
@@ -36,7 +25,12 @@ define(	['jquery', 'backbone', 'marionette', 'handlebars'],
 					pad(date.getHours(), 2) + ":" + pad(date.getMinutes(), 2);
 		});
 		
-		app.TaskModel = Backbone.Model.extend({});		
+		app.TaskModel = Backbone.Model.extend({
+			
+			complete: function () {
+				$.ajax(app.endpointUrl + '/complete/' + this.id);
+			}
+		});		
 		
 		app.TaskListModel = Backbone.Collection.extend({
 			
@@ -57,20 +51,19 @@ define(	['jquery', 'backbone', 'marionette', 'handlebars'],
 					overdue = nowMs - deadlineMs;					
 				
 				var $dateEl = $('.task-date', this.$el);
-				
-				if (overdue > 0) {
-					if (this.model.get('complete') === true) {
-						$dateEl.addClass('task-date_status_completed_with_overdue');
-					} else {						
-						$dateEl.addClass('task-date_status_overdue');	
-					}					
-				} else
-				{
-					var dayPeriodMs = 24 * 60 * 1000;
-					if (-overdue < dayPeriodMs) {
-						$dateEl.addClass('task-date_status_todo');
+
+				if (this.model.get('completed') === true) {
+					$dateEl.addClass('task-date_status_completed');
+				} else {
+					if (overdue > 0) {
+						$dateEl.addClass('task-date_status_overdue');										
 					} else {
-						$dateEl.addClass('task-date_status_future');
+						var dayPeriodMs = 24 * 60 * 1000;
+						if (-overdue < dayPeriodMs) {
+							$dateEl.addClass('task-date_status_todo');
+						} else {
+							$dateEl.addClass('task-date_status_future');
+						}
 					}
 				}
 			}
@@ -79,14 +72,37 @@ define(	['jquery', 'backbone', 'marionette', 'handlebars'],
 		app.MainTaskItemView = app.TaskItemView.extend({
 			template: '#task-item-template',
 			tagName: 'div class="task-item"',
+			onRender: function () {
+				app.TaskItemView.prototype.onRender.call(this);
+				this.$el.attr('id', 'task-' + this.model.id);				
+				
+				if (this.model.get('completed')) {
+					 this.$el.find('.task-completed-icon').addClass(
+							 'task-completed-icon_status_true');
+				}
+			},
+			
+			events: {
+				'click .task-completed-icon': function () {
+					this.model.complete();					
+				}
+			}
 		});
 		
 		app.SearchTaskItemView = app.TaskItemView.extend({
 			template: '#search-task-template',
 			tagName: 'div class="task-item task-item_block_search"',
 			hasSeparator: false,
+			
 			initialize: function (options) {
-				this.hasSeparator = options.hasSeparator;
+				this.hasSeparator = options.hasSeparator;				
+			},			
+			events: {
+				"click": function () {
+					$('html, body').animate({
+				        scrollTop: $("#task-" + this.model.id).offset().top
+				    });
+				}
 			},
 			
 			onRender: function () {
@@ -94,7 +110,7 @@ define(	['jquery', 'backbone', 'marionette', 'handlebars'],
 				
 				if (this.hasSeparator) {					
 					this.$el.addClass('task-item_separator_true');
-				}
+				}				
 			}
 		
 		});

@@ -54,11 +54,15 @@
 	padding-left: 50px;	
 }
 
-.task-item-completed-icon {
+.task-completed-icon {
 	position: absolute; top: 0; left: 0;
 	width: 32px; height: 32px;
 	background: url(../images/check-empty.png) no-repeat;
 	cursor: pointer;
+}
+
+.task-completed-icon_status_true {
+	background: url(../images/check-checked.png) no-repeat;
 }
 
 .task-date {
@@ -92,7 +96,7 @@
 }
 
 .task-list_block_search {	
-	overflow-y: scroll;
+	overflow-y: auto;
 	overflow-x: hidden;
 
 	width: auto;
@@ -125,7 +129,7 @@
 	font-size: 13px;
 }
 
-.task-date_status_complete {
+.task-date_status_completed {
 	color: #9ec54d
 }
 

@@ -10,7 +10,7 @@
 <body>
 
 	<script type="text/x-handlerbars-template" id="task-item-template">
-			<div class="task-item-completed-icon">
+			<div class="task-completed-icon">
 			</div>		
 			{{description}}
 			<div class="task-date">
