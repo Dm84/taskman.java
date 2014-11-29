@@ -47,12 +47,20 @@
 }
 
 .task-item {
-
+	
+	position: relative; top: 0; left: 0;
 	margin-top: 20px;
 	line-height: 100%;
-	padding-left: 50px;
-	background: url(../images/check-empty.png) no-repeat;
+	padding-left: 50px;	
 }
+
+.task-item-completed-icon {
+	position: absolute; top: 0; left: 0;
+	width: 32px; height: 32px;
+	background: url(../images/check-empty.png) no-repeat;
+	cursor: pointer;
+}
+
 
 .task-date {
 	font-size: 20px;	
@@ -82,19 +90,15 @@
     border: solid transparent; /* Прозрачные границы */    
     border-bottom: solid #fff; /* Добавляем треугольник */
     border-width: 15px 15px 21px;
+}
 
-   }
-
-.task-list_block_search {
-	
+.task-list_block_search {	
 	overflow-y: scroll;
 	overflow-x: hidden;
 
 	width: auto;
 	margin: 0;
 	height: 100%;
-
-
 }
 
 .item-match { text-decoration: underline; }
@@ -106,7 +110,6 @@
 }
 
 .task-item_block_search {
-
 	padding: 5px;	
 	font-size: 21px;
 	line-height: 100%;	

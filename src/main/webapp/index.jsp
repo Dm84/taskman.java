@@ -10,61 +10,34 @@
 <body>
 
 	<script type="text/x-handlerbars-template" id="task-item-template">
-		
+			<div class="task-item-completed-icon">
+			</div>		
 			{{description}}
 			<div class="task-date">
 				{{dateFormat deadline}}
-			</div>
-		
+			</div>		
 	</script>
 	
 	<script type="text/x-handlerbars-template" id="header-template">
-						<div class="search-entry">
-							<input type="text" class="entry"/>							
-						</div>
-						<div class="task-list-popup" style="display: none">
-							<div class="task-list task-list_block_search">
-							</div>
-						</div>
+		<div class="search-entry">
+			<input type="text" class="entry"/>							
+		</div>
+		<div class="task-list-popup" style="display: none">
+			<div class="task-list task-list_block_search">
+			</div>
+		</div>
 	</script>
 
-	<script type="text/x-handlerbars-template" id="search-item-template">
-
-							
-								<div class="task-item_block_search task-item_block_search task-item_state_active">
-									Редактирование <span class="item-match"> задач</span> из списка и поиска
-									<div class="task-date_block_search task-date_block_search">
-										21.03.2014 17:00
-									</div>						
-								</div>
-
-								<div class="item-separator item-separator_block_search">
-								</div>
-								<div class="task-item_block_search task-item_block_search">
-									Редактирование <span class="item-match"> задач</span> из списка и поиска
-									<div class="task-date_block_search task-date_block_search">
-										21.03.2014 17:00
-									</div>						
-								</div>
-
-								<div class="item-separator item-separator_block_search">
-								</div>
-								<div class="task-item_block_search task-item_block_search">
-									Редактирование <span class="item-match"> задач</span> из списка и поиска
-									<div class="task-date_block_search task-date_block_search">
-										21.03.2014 17:00
-									</div>						
-								</div>
-
-								<div class="item-separator item-separator_block_search">
-								</div>
-								<div class="task-item_block_search task-item_block_search">
-									Редактирование <span class="item-match"> задач</span> из списка и поиска
-									<div class="task-date_block_search task-date_block_search">
-										21.03.2014 17:00
-									</div>						
-								</div>
+	<script type="text/x-handlerbars-template" id="search-task-template">
+			Редактирование <span class="item-match">задач</span> из списка и поиска
+			<div class="task-date_block_search task-date_block_search">
+				21.03.2014 17:00
+			</div>	
+	</script>
 	
+	<script type="text/x-handlebars-template" id="search-separator-template">
+		<div class="task-item task-item_block_search">
+		<div class="item-separator item-separator_block_search"></div>
 	</script>
 
 	<div class="container">
@@ -74,12 +47,6 @@
 					<div class="header" id="header">
 					</div>					
 					<div id="task-list" class="task-list">
-						<div class="task-item">
-								Редактирование задач из списка и поиска
-							<div class="task-date">
-								21.03.2014 17:00
-							</div>
-						</div>
 					</div>
 
 

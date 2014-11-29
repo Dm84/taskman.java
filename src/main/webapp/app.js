@@ -40,13 +40,7 @@ define(	['jquery', 'backbone', 'marionette', 'handlebars'],
 		
 		app.TaskListModel = Backbone.Collection.extend({
 			
-//			defaults: {
-//				url: app.endpointUrl + '/list'
-//			},
-			
-			initialize: function (models, options) {
-				
-				console.log(options);
+			initialize: function (models, options) {				
 				if (typeof options['url'] !== undefined) 
 					this.url = options['url'];
 			},
@@ -56,9 +50,6 @@ define(	['jquery', 'backbone', 'marionette', 'handlebars'],
 		});
 
 		app.TaskItemView = Marionette.ItemView.extend({
-			template: '#task-item-template',
-			tagName: 'div class="task-item"',
-			
 			onRender: function () {
 				var now = new Date(), nowMs = now.getTime(), 
 					deadlineMs = this.model.get('deadline'), 
@@ -83,17 +74,32 @@ define(	['jquery', 'backbone', 'marionette', 'handlebars'],
 					}
 				}
 			}
-		});		
+		});
+		
+		app.MainTaskItemView = app.TaskItemView.extend({
+			template: '#task-item-template',
+			tagName: 'div class="task-item"',
+		});
+		app.SearchTaskItemView = app.TaskItemView.extend({
+			template: '#search-task-template',
+			tagName: 'div class="task-item task-item_block_search"',
+		});
+
 		
 		app.TaskListView = Marionette.CollectionView.extend({
-			childView: app.TaskItemView
+			childView: app.MainTaskItemView
 		});
 		
 		app.HeaderView = Marionette.CompositeView.extend({
 			template: '#header-template',
-			childView: app.TaskItemView,
+			childView: app.SearchTaskItemView,
 			childViewContainer: ".task-list_block_search",
-			
+			childEvents: { 
+				render: function () {
+					//this.$el.find("div:last").append('<div class="task-item task-item_block_search"></div>');
+					
+				}
+			},			
 			events: {
 				"keyup input.entry": function (e) {
 					this.collection.fetch({
@@ -115,7 +121,6 @@ define(	['jquery', 'backbone', 'marionette', 'handlebars'],
 			taskList.fetch();
 			
 			var searchTaskList = new app.TaskListModel([], {url: app.endpointUrl + '/search'});
-			console.log(searchTaskList.url);
 			
 			var listView = new app.TaskListView({ collection: taskList });
 			var headerView = new app.HeaderView({ collection: searchTaskList});
