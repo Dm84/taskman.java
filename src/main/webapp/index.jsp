@@ -29,9 +29,9 @@
 	</script>
 
 	<script type="text/x-handlerbars-template" id="search-task-template">
-			Редактирование <span class="item-match">задач</span> из списка и поиска
-			<div class="task-date_block_search task-date_block_search">
-				21.03.2014 17:00
+			{{description}}
+			<div class="task-date task-date_block_search">
+				{{dateFormat deadline}}
 			</div>	
 	</script>
 	
@@ -48,8 +48,6 @@
 					</div>					
 					<div id="task-list" class="task-list">
 					</div>
-
-
 				</div>		
 			</div>
 		</div>

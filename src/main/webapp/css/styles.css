@@ -61,7 +61,6 @@
 	cursor: pointer;
 }
 
-
 .task-date {
 	font-size: 20px;	
 }
@@ -103,9 +102,8 @@
 
 .item-match { text-decoration: underline; }
 
-.item-separator_block_search {
+.task-item_separator_true {
 	border-bottom: 1px solid #b8b8b8;
-	height: 1px;
 	margin: 0px 0 10px;
 }
 

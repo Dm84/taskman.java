@@ -80,9 +80,23 @@ define(	['jquery', 'backbone', 'marionette', 'handlebars'],
 			template: '#task-item-template',
 			tagName: 'div class="task-item"',
 		});
+		
 		app.SearchTaskItemView = app.TaskItemView.extend({
 			template: '#search-task-template',
 			tagName: 'div class="task-item task-item_block_search"',
+			hasSeparator: false,
+			initialize: function (options) {
+				this.hasSeparator = options.hasSeparator;
+			},
+			
+			onRender: function () {
+				app.TaskItemView.prototype.onRender.call(this);
+				
+				if (this.hasSeparator) {					
+					this.$el.addClass('task-item_separator_true');
+				}
+			}
+		
 		});
 
 		
@@ -94,12 +108,11 @@ define(	['jquery', 'backbone', 'marionette', 'handlebars'],
 			template: '#header-template',
 			childView: app.SearchTaskItemView,
 			childViewContainer: ".task-list_block_search",
-			childEvents: { 
-				render: function () {
-					//this.$el.find("div:last").append('<div class="task-item task-item_block_search"></div>');
-					
-				}
-			},			
+
+			childViewOptions: function (model, index) {
+				return { hasSeparator: index !== (this.collection.length - 1) };
+			},
+			
 			events: {
 				"keyup input.entry": function (e) {
 					this.collection.fetch({
