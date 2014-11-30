@@ -25,8 +25,7 @@ define(	['jquery', 'backbone', 'marionette', 'handlebars', 'jquery_ui'],
 					pad(date.getHours(), 2) + ":" + pad(date.getMinutes(), 2);
 		});
 		
-		app.TaskModel = Backbone.Model.extend({
-			
+		app.TaskModel = Backbone.Model.extend({			
 			url: app.endpointUrl,
 			complete: function () {
 				this.sync(null, this, { url: this.url() + '/complete', type: 'post' });
@@ -112,23 +111,27 @@ define(	['jquery', 'backbone', 'marionette', 'handlebars', 'jquery_ui'],
 				if (this.hasSeparator) {					
 					this.$el.addClass('task-item_separator_true');
 				}				
-			}
-		
+			}		
 		});
-
 		
 		app.TaskListView = Marionette.CollectionView.extend({
-			childView: app.MainTaskItemView
+			childView: app.MainTaskItemView,
+			initialize: function() {
+		        this.listenTo(this.collection, 'sync', this.render);		        
+			}			
 		});
 		
 		app.HeaderView = Marionette.CompositeView.extend({
 			template: '#header-template',
 			childView: app.SearchTaskItemView,
-			childViewContainer: ".task-list_block_search",			
-
-			initialize: function() {
-		        this.listenTo(this.collection, 'add', this.render);		        
+			childViewContainer: ".task-list_block_search",
+			
+			initialize: function(options) {
+				if (typeof options.mainCollection !== 'undefined') {
+					this.mainCollection = options.mainCollection;
+				}
 			},
+
 			onRender: function () {				
 				console.log('collection render');
 				this.$el.find('.task-create-inputs__date').datepicker({
@@ -152,7 +155,7 @@ define(	['jquery', 'backbone', 'marionette', 'handlebars', 'jquery_ui'],
 					this.$el.find('.popup_task_search').fadeOut();
 				},
 				"click .create-task-icon": function (e) {
-					this.$el.find('.popup_task_create').toggle(500);					
+					this.popup_toggle();
 				},
 				"focus .task-create-inputs__desc, .task-create-inputs__date": function (e) {
 					this.$el.find('.task-create-inputs__save').
@@ -172,14 +175,15 @@ define(	['jquery', 'backbone', 'marionette', 'handlebars', 'jquery_ui'],
 							minutes = parseInt(time[1], 10),
 							deadline = new Date(year, month, day, hours, minutes);
 						
-						console.log(date);
-							
-						this.collection.create({
+						this.mainCollection.create({
 							description: this.$el.find('.task-create-inputs__desc').val(),
 							deadline: deadline.getTime(),
 							completed: false
-						}, {wait: true, error: this.bad_create});
-										
+						}, {
+							wait: true, 
+							error: _.bind(this.bad_create, this), 
+							success: _.bind(this.popup_toggle, this)
+						});																						
 					} catch (exception) {
 						this.bad_create();
 					}
@@ -187,23 +191,30 @@ define(	['jquery', 'backbone', 'marionette', 'handlebars', 'jquery_ui'],
 				}				
 			},
 			
+			popup_toggle: function () {
+				this.$el.find('.popup_task_create').toggle(500);
+			},
+			
 			bad_create: function (model, response) {
-				$('.task-create-inputs__save').
+				this.$el.find('.task-create-inputs__save').
 					removeClass('btn-defaults').addClass('btn-danger');
 			}
 		});
 		
 		app.on("start", function () {
-			var taskList = new app.TaskListModel();			
-			taskList.fetch();
+			app.taskList = new app.TaskListModel();			
+			app.taskList.fetch();
 			
-			var searchTaskList = new app.TaskListModel();
+			app.searchTaskList = new app.TaskListModel();
 			
-			var listView = new app.TaskListView({ collection: taskList });
-			var headerView = new app.HeaderView({ collection: searchTaskList});
+			app.listView = new app.TaskListView({ collection: app.taskList });
+			app.headerView = new app.HeaderView({ 
+				collection: app.searchTaskList, 
+				mainCollection: app.taskList
+			});
 			
-			app.tasksRegion.show(listView);
-			app.headerRegion.show(headerView);
+			app.tasksRegion.show(app.listView);
+			app.headerRegion.show(app.headerView);
 		});
 		
 		app.start();
