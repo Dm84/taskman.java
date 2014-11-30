@@ -24,7 +24,7 @@
 		<div class="search-entry">
 			<input type="text" class="entry"/>							
 		</div>
-		<div class="popup popup-window_task_search" style="display: none">
+		<div class="popup popup_task_search" style="display: none">
 			<div class="task-list task-list_block_search">
 			</div>
 		</div>
@@ -33,7 +33,7 @@
 			<div class="task-completed-icon"></div>
 				<textarea class="task-create-inputs__desc task-create-input "></textarea>			
 				<input type="text" class="task-create-inputs__date task-create-input"/>
-				<button class="btn btn-default pull-right">Сохранить</button>
+				<button class="btn btn-default pull-right task-create-inputs__save">Сохранить</button>
 			</div>
 		</div>
 	</script>

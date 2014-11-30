@@ -160,6 +160,7 @@
 	line-height: 100%;	
 	height: 67px;
 	cursor: pointer;
+	margin: 0;
 }
 
 .task-item_block_search:hover {

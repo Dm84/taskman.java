@@ -13,6 +13,7 @@ import org.springframework.web.servlet.mvc.AbstractController;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
 import org.apache.log4j.Logger;
 
 import java.util.HashMap;
@@ -42,8 +43,8 @@ public class TaskController {
 		return "view";
 	}
 		
-	@RequestMapping(value = "/tasks", method = RequestMethod.POST)
-	public String add(@ModelAttribute Task task) {		
+	@RequestMapping(value = "/tasks", method = RequestMethod.POST, consumes="application/json")
+	public String add(@RequestBody Task task) {	
 		service.add(task);
 		return okResponse;
 	}
@@ -86,8 +87,8 @@ public class TaskController {
 		}
 	}
 	
+	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 	@ExceptionHandler(Exception.class)
-	@ResponseBody
 	public GenericErrorResponse handleError(HttpServletRequest req, Exception exception) {		
 		return new GenericErrorResponse(exception);
 	}
@@ -111,6 +112,7 @@ public class TaskController {
 		}
 	}
 	
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(ConstraintViolationException.class)
 	public ValidationViolationResponse handleFieldError(HttpServletRequest req, 
 			ConstraintViolationException exception) {
