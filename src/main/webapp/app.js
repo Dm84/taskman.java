@@ -125,8 +125,11 @@ define(	['jquery', 'backbone', 'marionette', 'handlebars', 'jquery_ui'],
 			childView: app.SearchTaskItemView,
 			childViewContainer: ".task-list_block_search",
 
-			initialize: function () {
-				this.$el.find('.task-date').datepicker();
+			onRender: function () {
+				console.log(this.$el.find('.task-create-inputs__date'));
+				this.$el.find('.task-create-inputs__date').datepicker({
+					dateFormat: "dd.mm.yy 12:00"
+				});
 			},
 			childViewOptions: function (model, index) {
 				return { hasSeparator: index !== (this.collection.length - 1) };
@@ -139,13 +142,13 @@ define(	['jquery', 'backbone', 'marionette', 'handlebars', 'jquery_ui'],
 					});					
 				},
 				"focus input.entry": function (e) {
-					this.$el.find('.task-list-popup').fadeIn();
+					this.$el.find('.popup_task_search').fadeIn();
 				},
 				"blur input.entry": function (e) {
-					this.$el.find('.task-list-popup').fadeOut();
+					this.$el.find('.popup_task_search').fadeOut();
 				},
 				"click .create-task-icon": function (e) {
-					
+					this.$el.find('.popup_task_create').fadeIn();					
 				}
 			}
 		});

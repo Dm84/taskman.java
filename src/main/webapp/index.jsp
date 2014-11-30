@@ -4,6 +4,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<link rel="stylesheet" type="text/css" media="screen" href="css/bootstrap.css"/>		
 		<link rel="stylesheet" type="text/css" media="screen" href="css/styles.css"/>
+		<link rel="stylesheet" type="text/css" media="screen" href="css/jquery-ui.css"/>
 		<script data-main="main" src="http://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.15/require.js"></script>
 		<title>Taskman</title>
 </head>
@@ -28,8 +29,12 @@
 			</div>
 		</div>
 		<div class="popup popup_task_create" style="display: none">
-			<textarea class="task-description-input"></textarea>			
-			<input type="text" class="task-date"/>
+			<div class="task-create-inputs">
+			<div class="task-completed-icon"></div>
+				<textarea class="task-create-inputs__desc task-create-input "></textarea>			
+				<input type="text" class="task-create-inputs__date task-create-input"/>
+				<button class="btn btn-default pull-right">Сохранить</button>
+			</div>
 		</div>
 	</script>
 

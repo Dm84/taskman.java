@@ -76,21 +76,57 @@
 	font-size: 20px;	
 }
 
-.popup_task_search {
-
+.popup { 
+	
 	padding: 16px;
 	margin: 0;
 	background: #fff;
 	border: 1px solid #b8b8b8;
 	border-radius: 4px;
-	width: 348px;
-	height: 257px;
-
-
 	position: absolute;
+	z-index: 100;
 	top: 90px;
-	left: 19px;
-	z-index: 100;	
+}
+
+.popup_task_create {
+	left: 0;
+	width: 100%;
+}
+
+.task-create-inputs {
+	position: relative; top: 0; left: 0;
+	padding-left: 50px;	
+}
+
+.task-create-input {
+	border: 1px solid #b8b8b8;
+	display: block;
+	width: 100%;
+}
+
+.task-create-inputs__desc {
+	height: 119px;
+}
+
+.task-create-inputs__date {	
+	height: 38px;
+	margin: 20px 0;	
+}
+
+.popup_task_create::before {
+    content: ''; 
+    position: absolute; /* Абсолютное позиционирование */
+    right: 30px; top: -36px; /* Положение треугольника */
+    border: solid transparent; /* Прозрачные границы */    
+    border-bottom: solid #fff; /* Добавляем треугольник */
+    border-width: 15px 15px 21px;
+}
+
+.popup_task_search {
+
+	width: 348px;
+	height: 257px;	
+	left: 19px;	
 }
 
 .popup_task_search::before {
