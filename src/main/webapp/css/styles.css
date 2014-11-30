@@ -20,6 +20,13 @@
 	left: 0;
 }
 
+.create-task-icon {
+	position: absolute; right: 30px; top: 27px;
+	width: 31px; height: 31px;
+	background: url(../images/cross.png) no-repeat;
+	cursor: pointer;
+}
+
 .search-entry {
 
 	width: 348px;
@@ -69,7 +76,7 @@
 	font-size: 20px;	
 }
 
-.task-list-popup {
+.popup_task_search {
 
 	padding: 16px;
 	margin: 0;
@@ -86,7 +93,7 @@
 	z-index: 100;	
 }
 
-.task-list-popup::before {
+.popup_task_search::before {
     content: ''; 
     position: absolute; /* Абсолютное позиционирование */
     left: 55px; top: -36px; /* Положение треугольника */

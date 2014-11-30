@@ -1,4 +1,4 @@
-define(	['jquery', 'backbone', 'marionette', 'handlebars'], 
+define(	['jquery', 'backbone', 'marionette', 'handlebars', 'jquery_ui'], 
 		function ($, Backbone, Marionette, Handlebars)
 {
 	return function () {		
@@ -8,7 +8,7 @@ define(	['jquery', 'backbone', 'marionette', 'handlebars'],
 		
 		var app = new Backbone.Marionette.Application();
 		
-		app.endpointUrl = '/artifact/endpoint/task'; 
+		app.endpointUrl = '/artifact/endpoint/tasks'; 
 		app.addRegions({tasksRegion: "#task-list", headerRegion: '#header'});
 				
 		Handlebars.registerHelper('dateFormat', function(date) {
@@ -28,16 +28,16 @@ define(	['jquery', 'backbone', 'marionette', 'handlebars'],
 		app.TaskModel = Backbone.Model.extend({
 			
 			complete: function () {
-				$.ajax(app.endpointUrl + '/complete/' + this.id);
+				this.sync(null, this, { url: this.url() + '/complete', type: 'post' });
 			}
 		});		
 		
-		app.TaskListModel = Backbone.Collection.extend({
-			
-			initialize: function (models, options) {				
-				if (typeof options['url'] !== undefined) 
-					this.url = options['url'];
-			},
+		app.TaskListModel = Backbone.Collection.extend({			
+			url: app.endpointUrl,
+//			initialize: function (models, options) {				
+//				if (typeof options['url'] !== undefined) 
+//					this.url = options['url'];
+//			},
 			
 			model: app.TaskModel,			
 			urlRoot: 'http://localhost:8080',
@@ -125,6 +125,9 @@ define(	['jquery', 'backbone', 'marionette', 'handlebars'],
 			childView: app.SearchTaskItemView,
 			childViewContainer: ".task-list_block_search",
 
+			initialize: function () {
+				this.$el.find('.task-date').datepicker();
+			},
 			childViewOptions: function (model, index) {
 				return { hasSeparator: index !== (this.collection.length - 1) };
 			},
@@ -140,16 +143,19 @@ define(	['jquery', 'backbone', 'marionette', 'handlebars'],
 				},
 				"blur input.entry": function (e) {
 					this.$el.find('.task-list-popup').fadeOut();
+				},
+				"click .create-task-icon": function (e) {
+					
 				}
 			}
 		});
 		
 		app.on("start", function () {
 			      
-			var taskList = new app.TaskListModel([], {url: app.endpointUrl + '/list'});			
+			var taskList = new app.TaskListModel();			
 			taskList.fetch();
 			
-			var searchTaskList = new app.TaskListModel([], {url: app.endpointUrl + '/search'});
+			var searchTaskList = new app.TaskListModel();
 			
 			var listView = new app.TaskListView({ collection: taskList });
 			var headerView = new app.HeaderView({ collection: searchTaskList});

@@ -37,29 +37,29 @@ public class TaskController {
 		this.service = service;
 	}	 
 	
-	@RequestMapping("/task/test")
+	@RequestMapping("/tasks/test")
 	public String test(Model model) {
 		return "view";
 	}
 		
-	@RequestMapping("/task/create")
+	@RequestMapping(value = "/tasks", method = RequestMethod.POST)
 	public String add(@ModelAttribute Task task) {		
 		service.add(task);
 		return okResponse;
 	}
 	
-	@RequestMapping("/task/search")
+	@RequestMapping(value = "/tasks", params = "query")
 	public List search(String query) {
 		return service.find(query);
 	}
 	
-	@RequestMapping("/task/complete/{id}")
+	@RequestMapping("/tasks/{id}/complete")
 	public String complete(@PathVariable Integer id) {
 		service.complete(id);
 		return okResponse;
 	}
 
-	@RequestMapping("/task/list")
+	@RequestMapping(value = "/tasks", method = RequestMethod.GET)
 	public List list() {		
 		return service.findAll();
 	}

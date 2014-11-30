@@ -19,12 +19,17 @@
 	</script>
 	
 	<script type="text/x-handlerbars-template" id="header-template">
+		<div class="create-task-icon"></div>
 		<div class="search-entry">
 			<input type="text" class="entry"/>							
 		</div>
-		<div class="task-list-popup" style="display: none">
+		<div class="popup popup-window_task_search" style="display: none">
 			<div class="task-list task-list_block_search">
 			</div>
+		</div>
+		<div class="popup popup_task_create" style="display: none">
+			<textarea class="task-description-input"></textarea>			
+			<input type="text" class="task-date"/>
 		</div>
 	</script>
 
