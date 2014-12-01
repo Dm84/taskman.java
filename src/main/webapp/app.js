@@ -195,15 +195,17 @@ define(	['jquery', 'backbone', 'marionette', 'handlebars', 'jquery_ui'],
 //					});
 					
 					var filtered = this.mainCollection.filter(function (item) {
-						return item.get('description').match(new RegExp(query, 'i'));
+						return query != '' && item.get('description').match(new RegExp(query, 'i'));
 					});					
 					
 					this.collection.reset();
 					this.collection.set(filtered);
-					//this.collection.trigger("change");
-				},
-				"focus @ui.entry": function (e) {
-					this.ui.popup_search.fadeIn();
+					
+					if (this.collection.size() > 0) { 
+						this.ui.popup_search.fadeIn(); }
+					else {
+						this.ui.popup_search.fadeOut();	
+					}
 				},
 				"blur @ui.entry": function (e) {
 					this.ui.popup_search.fadeOut();

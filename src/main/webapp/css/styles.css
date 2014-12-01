@@ -1,3 +1,8 @@
+
+input {
+	outline: none;
+}
+
 .content { 
 
 	overflow: hidden;
@@ -34,7 +39,7 @@
 	width: 70%;
 	height: 47px;
 
-	padding: 0 10px 0 60px;
+	padding: 5px 10px 0 60px;
 	background: #eee url(../images/icon-search.png) 12px center no-repeat;
 
 	border-radius: 10px;	
@@ -42,8 +47,9 @@
 
 .search-input {	
 	
+	display: block;
 	width: 100%;	
-	line-height: 37px;
+	height: 37px;
 	background: none;
 	border: none;
 	vertical-align: middle;
@@ -190,3 +196,20 @@
 	color: #b8b8b8
 }
 
+@media screen and (max-width: 420px) {
+	.content {
+		font-size: 20px;
+	}
+	
+	.task-date {
+		font-size: 12px;	
+	}
+	
+	.task-item_block_search {
+		font-size: 13px;
+	}
+	
+	.task-date_block_search {
+		font-size: 8px;
+	}
+}
