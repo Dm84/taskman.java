@@ -45,6 +45,9 @@ define(	['jquery', 'backbone', 'marionette', 'handlebars', 'jquery_ui'],
 			
 			model: app.TaskModel,			
 			urlRoot: 'http://localhost:8080',
+			comparator: function (task) {
+				return task.get('deadline');
+			}
 		});
 
 		app.TaskItemView = Marionette.ItemView.extend({
@@ -102,9 +105,13 @@ define(	['jquery', 'backbone', 'marionette', 'handlebars', 'jquery_ui'],
 			template: '#search-task-template',
 			tagName: 'div class="task-item task-item_block_search"',
 			hasSeparator: false,
+			span: '',
 			
 			initialize: function (options) {
-				this.hasSeparator = options.hasSeparator;				
+				this.hasSeparator = options.hasSeparator;
+				this.span = options.span;
+				
+								
 			},			
 			events: {
 				"click": function () {
@@ -119,6 +126,15 @@ define(	['jquery', 'backbone', 'marionette', 'handlebars', 'jquery_ui'],
 				
 				if (this.hasSeparator) {					
 					this.$el.addClass('task-item_separator_true');
+				}
+				
+				console.log(this.span);
+				
+				if (this.span.length) {					
+					var span = this.span;					
+					this.$el.html(function(i, html) {						
+						return html.replace(new RegExp(span, 'i'), "<span>\\$1</span>");
+					});					
 				}				
 			}		
 		});
@@ -134,55 +150,74 @@ define(	['jquery', 'backbone', 'marionette', 'handlebars', 'jquery_ui'],
 			template: '#header-template',
 			childView: app.SearchTaskItemView,
 			childViewContainer: ".task-list_block_search",
+			currentQuery: '',
 			
 			initialize: function(options) {
 				if (typeof options.mainCollection !== 'undefined') {
 					this.mainCollection = options.mainCollection;
 				}
 			},
-
 			onRender: function () {				
-				this.$el.find('.task-create-inputs__date').datepicker({
+				this.ui.date_input.datepicker({
 					dateFormat: "dd.mm.yy 12:00"
 				});
 			},
+			
 			childViewOptions: function (model, index) {
-				return { hasSeparator: index !== (this.collection.length - 1) };
+				return { hasSeparator: index !== (this.collection.length - 1), span: this.currentQuery };
 			},
 			
 			ui: {
 				entry: 'input.entry',
-				search_popup: '.popup_task_search',
-				add_task_button: '.create-task-icon',
+				popup_search: '.popup_task_search',
+				popup_create: '.popup_task_create',
+				button_add_task: '.create-task-icon',
 				desc_input: '.task-create-inputs__desc',
 				date_input: '.task-create-inputs__date',
-				save_input: '.task-create-inputs__save'
+				save_input: '.task-create-inputs__save',
+				completed_icon: '.task-completed-icon',
+			},
+			
+			ui_class: {
+				completed_checked: 'task-completed-icon_status_true',
+				btn_danger: 'btn-danger'
 			},
 			
 			events: {
 				"keyup @ui.entry": function (e) {
-					this.collection.fetch({
-						url: this.collection.url + '?query=' + $(e.target).val()
-					});					
+					
+					var query = $(e.target).val();
+					this.currentQuery = query;
+					
+//					this.collection.fetch({
+//						url: this.collection.url + '?query=' + 
+//					});
+					
+					var filtered = this.mainCollection.filter(function (item) {
+						return item.get('description').match(new RegExp(query, 'i'));
+					});		
+					
+					
+					this.collection.set(filtered);					
 				},
 				"focus @ui.entry": function (e) {
-					this.ui.search_popup.fadeIn();
+					this.ui.popup_search.fadeIn();
 				},
 				"blur @ui.entry": function (e) {
-					this.ui.search_popup.fadeOut();
+					this.ui.popup_search.fadeOut();
 				},
-				"click @ui.add_task_button": function (e) {
+				"click @ui.button_add_task": function (e) {
 					this.popup_toggle();
 				},
 				"focus @ui.desc_input, @ui.date_input": function (e) {
-					this.ui.save_input.removeClass('btn-danger');					
+					this.ui.save_input.removeClass(this.ui_class.btn_danger);					
 				},
 				"click @ui.completed_icon": function (e) {
-					
+					this.ui.completed_icon.toggleClass(this.ui_class.completed_checked);
 				},				
 				"click @ui.save_input": function (e) {					
 					try {
-						var dateVal = this.ui.save_input.val();
+						var dateVal = this.ui.date_input.val();
 						
 						var	dateAndTime = dateVal.split(' '),
 							date = dateAndTime[0].split('.'), 
@@ -197,7 +232,7 @@ define(	['jquery', 'backbone', 'marionette', 'handlebars', 'jquery_ui'],
 						this.mainCollection.create({
 							description: this.ui.desc_input.val(),
 							deadline: deadline.getTime(),
-							completed: false
+							completed: this.ui.completed_icon.hasClass(this.ui_class.completed_checked)
 						}, {
 							wait: true, 
 							error: _.bind(this.bad_create, this), 
@@ -211,11 +246,11 @@ define(	['jquery', 'backbone', 'marionette', 'handlebars', 'jquery_ui'],
 			},
 			
 			popup_toggle: function () {
-				this.$el.find('.popup_task_create').toggle(500);
+				this.ui.popup_create.toggle(500);
 			},
 			
 			bad_create: function (model, response) {
-				this.ui.save_input.addClass('btn-danger');
+				this.ui.save_input.addClass(this.ui_class.btn_danger);
 			}
 		});
 		
