@@ -169,7 +169,7 @@ define(	['jquery', 'backbone', 'marionette', 'handlebars', 'jquery_ui'],
 			},
 			
 			ui: {
-				entry: 'input.entry',
+				entry: '.search-input',
 				popup_search: '.popup_task_search',
 				popup_create: '.popup_task_create',
 				button_add_task: '.create-task-icon',

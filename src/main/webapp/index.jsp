@@ -2,7 +2,7 @@
 <html>
 <head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="viewport" content="width=device-width, initial-scale=2">
 		<link rel="stylesheet" type="text/css" media="screen" href="css/bootstrap.css"/>		
 		<link rel="stylesheet" type="text/css" media="screen" href="css/styles.css"/>
 		<link rel="stylesheet" type="text/css" media="screen" href="css/jquery-ui.css"/>
@@ -22,11 +22,11 @@
 	
 	<script type="text/x-handlerbars-template" id="header-template">
 		<div class="create-task-icon"></div>
-		<div class="search-entry">
-			<input type="text" class="entry"/>							
-		</div>
-		<div class="popup popup_task_search" style="display: none">
-			<div class="task-list task-list_block_search">
+		<div class="search-block">
+			<input type="text" class="search-input"/>							
+			<div class="popup popup_task_search" style="display: none">
+				<div class="task-list task-list_block_search">
+				</div>
 			</div>
 		</div>
 		<div class="popup popup_task_create" style="display: none">
@@ -52,16 +52,12 @@
 	</script>
 
 	<div class="container">
-		<div class="row">
-			<div class="col-sm-6 col-sm-offset-3">			
-				<div id="content">
-					<div class="header" id="header">
-					</div>					
-					<div id="task-list" class="task-list">
-					</div>
-				</div>		
+		<div id="content" class="content">
+			<div class="header" id="header">
+			</div>					
+			<div id="task-list" class="task-list">
 			</div>
-		</div>
+		</div>		
 	</div>
 
 

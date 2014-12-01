@@ -1,4 +1,4 @@
-#content { 
+.content { 
 
 	overflow: hidden;
 	font-family: "Arial";
@@ -6,6 +6,8 @@
 	font-size: 33px;
 	line-height: 120%;
 	min-height: 400px;
+	max-width: 500px;
+	margin: 0 auto;
 }
 
 .header {
@@ -15,9 +17,7 @@
 	background: #bfbfbf;
 	box-shadow: 0px 4px 4px #ddd;
 	margin-bottom: 50px;
-	position: relative;
-	top: 0;
-	left: 0;
+	position: relative; top: 0; left: 0;
 }
 
 .create-task-icon {
@@ -27,30 +27,47 @@
 	cursor: pointer;
 }
 
-.search-entry {
+.search-block {
 
-	width: 348px;
+	position: relative; top: 0; left: 0;
+	max-width: 348px;
+	width: 70%;
 	height: 47px;
 
-	padding-left: 60px;
+	padding: 0 10px 0 60px;
 	background: #eee url(../images/icon-search.png) 12px center no-repeat;
 
 	border-radius: 10px;	
-	overflow: hidden;
 }
 
-.entry {	
+.search-input {	
 	
-	width: 280px;	
+	width: 100%;	
 	line-height: 37px;
 	background: none;
 	border: none;
 	vertical-align: middle;
 }
 
+.popup_task_search {	
+	width: 100%;
+	height: 257px;	
+	left: 0px;
+	top: 70px;
+}
+
+.popup_task_search::before {
+    content: ''; 
+    position: absolute; /* Абсолютное позиционирование */
+    left: 50px; top: -36px; /* Положение треугольника */
+    border: solid transparent; /* Прозрачные границы */    
+    border-bottom: solid #fff; /* Добавляем треугольник */
+    border-width: 15px 15px 21px;
+}
+
+
 .task-list {
 	margin: 0 0 0 28px;
-	width: 507px;
 }
 
 .task-item {
@@ -84,13 +101,13 @@
 	border: 1px solid #b8b8b8;
 	border-radius: 4px;
 	position: absolute;
-	z-index: 100;
-	top: 90px;
+	z-index: 100;	
 }
 
 .popup_task_create {
 	left: 0;
 	width: 100%;
+	top: 90px;
 }
 
 .task-create-inputs {
@@ -117,22 +134,6 @@
     content: ''; 
     position: absolute; /* Абсолютное позиционирование */
     right: 30px; top: -36px; /* Положение треугольника */
-    border: solid transparent; /* Прозрачные границы */    
-    border-bottom: solid #fff; /* Добавляем треугольник */
-    border-width: 15px 15px 21px;
-}
-
-.popup_task_search {
-
-	width: 348px;
-	height: 257px;	
-	left: 19px;	
-}
-
-.popup_task_search::before {
-    content: ''; 
-    position: absolute; /* Абсолютное позиционирование */
-    left: 55px; top: -36px; /* Положение треугольника */
     border: solid transparent; /* Прозрачные границы */    
     border-bottom: solid #fff; /* Добавляем треугольник */
     border-width: 15px 15px 21px;
