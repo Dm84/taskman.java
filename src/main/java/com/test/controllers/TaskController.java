@@ -65,8 +65,7 @@ public class TaskController {
 		return service.findAll();
 	}
 	
-	class ErrorResponseObject {
-		
+	class ErrorResponseObject {		
 	}
 	
 	class ErrorResponse {
@@ -97,8 +96,7 @@ public class TaskController {
 
 		public Map<String, String> violations;
 		
-		public ValidationViolationResponse(ConstraintViolationException exception) {
-			
+		public ValidationViolationResponse(ConstraintViolationException exception) {			
 			super(exception.getMessage(), "validation_violation");
 			violations = new HashMap<String, String>();
 			

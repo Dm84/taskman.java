@@ -20,15 +20,19 @@ define(	['jquery', 'backbone', 'marionette', 'handlebars', 'jquery_ui'],
 			}
 			
 			var date = new Date(date);
-			return	pad(date.getDay(), 2) + "." + pad(date.getMonth(), 2) + "." + 
+			return	pad(date.getDate(), 2) + "." + pad(date.getMonth() + 1, 2) + "." + 
 					date.getFullYear() + " " + 
 					pad(date.getHours(), 2) + ":" + pad(date.getMinutes(), 2);
 		});
 		
 		app.TaskModel = Backbone.Model.extend({			
-			url: app.endpointUrl,
+			//url: app.endpointUrl,
 			complete: function () {
-				this.sync(null, this, { url: this.url() + '/complete', type: 'post' });
+				this.sync(null, this, { 
+					url: this.url() + '/complete', 
+					type: 'post',
+					success: _.bind(this.set, this, {completed: true})
+				});
 			}
 		});		
 		
@@ -58,7 +62,7 @@ define(	['jquery', 'backbone', 'marionette', 'handlebars', 'jquery_ui'],
 					if (overdue > 0) {
 						$dateEl.addClass('task-date_status_overdue');										
 					} else {
-						var dayPeriodMs = 24 * 60 * 1000;
+						var dayPeriodMs = 24 * 60 * 60 * 1000;
 						if (-overdue < dayPeriodMs) {
 							$dateEl.addClass('task-date_status_todo');
 						} else {
@@ -72,6 +76,11 @@ define(	['jquery', 'backbone', 'marionette', 'handlebars', 'jquery_ui'],
 		app.MainTaskItemView = app.TaskItemView.extend({
 			template: '#task-item-template',
 			tagName: 'div class="task-item"',
+			
+			initialize: function () {
+				this.listenTo(this.model, "change", this.render);
+			},			
+			
 			onRender: function () {
 				app.TaskItemView.prototype.onRender.call(this);
 				this.$el.attr('id', 'task-' + this.model.id);				
@@ -133,7 +142,6 @@ define(	['jquery', 'backbone', 'marionette', 'handlebars', 'jquery_ui'],
 			},
 
 			onRender: function () {				
-				console.log('collection render');
 				this.$el.find('.task-create-inputs__date').datepicker({
 					dateFormat: "dd.mm.yy 12:00"
 				});
@@ -142,41 +150,52 @@ define(	['jquery', 'backbone', 'marionette', 'handlebars', 'jquery_ui'],
 				return { hasSeparator: index !== (this.collection.length - 1) };
 			},
 			
+			ui: {
+				entry: 'input.entry',
+				search_popup: '.popup_task_search',
+				add_task_button: '.create-task-icon',
+				desc_input: '.task-create-inputs__desc',
+				date_input: '.task-create-inputs__date',
+				save_input: '.task-create-inputs__save'
+			},
+			
 			events: {
-				"keyup input.entry": function (e) {
+				"keyup @ui.entry": function (e) {
 					this.collection.fetch({
 						url: this.collection.url + '?query=' + $(e.target).val()
 					});					
 				},
-				"focus input.entry": function (e) {
-					this.$el.find('.popup_task_search').fadeIn();
+				"focus @ui.entry": function (e) {
+					this.ui.search_popup.fadeIn();
 				},
-				"blur input.entry": function (e) {
-					this.$el.find('.popup_task_search').fadeOut();
+				"blur @ui.entry": function (e) {
+					this.ui.search_popup.fadeOut();
 				},
-				"click .create-task-icon": function (e) {
+				"click @ui.add_task_button": function (e) {
 					this.popup_toggle();
 				},
-				"focus .task-create-inputs__desc, .task-create-inputs__date": function (e) {
-					this.$el.find('.task-create-inputs__save').
-					removeClass('btn-danger').addClass('btn-defaults');					
+				"focus @ui.desc_input, @ui.date_input": function (e) {
+					this.ui.save_input.removeClass('btn-danger');					
 				},
-				"click .task-create-inputs__save": function (e) {					
+				"click @ui.completed_icon": function (e) {
+					
+				},				
+				"click @ui.save_input": function (e) {					
 					try {
-						var dateVal = this.$el.find('.task-create-inputs__date').val();
+						var dateVal = this.ui.save_input.val();
 						
 						var	dateAndTime = dateVal.split(' '),
 							date = dateAndTime[0].split('.'), 
 							time = dateAndTime[1].split(':');						
 							day = parseInt(date[0], 10), 
-							month = parseInt(date[1], 10), 
+							month = parseInt(date[1], 10) - 1, 
 							year = parseInt(date[2], 10),
 							hours = parseInt(time[0], 10), 
 							minutes = parseInt(time[1], 10),
-							deadline = new Date(year, month, day, hours, minutes);
+							deadline = new Date(year, month, day, hours, minutes, 0, 0);
 						
 						this.mainCollection.create({
-							description: this.$el.find('.task-create-inputs__desc').val(),
+							description: this.ui.desc_input.val(),
 							deadline: deadline.getTime(),
 							completed: false
 						}, {
@@ -196,8 +215,7 @@ define(	['jquery', 'backbone', 'marionette', 'handlebars', 'jquery_ui'],
 			},
 			
 			bad_create: function (model, response) {
-				this.$el.find('.task-create-inputs__save').
-					removeClass('btn-defaults').addClass('btn-danger');
+				this.ui.save_input.addClass('btn-danger');
 			}
 		});
 		

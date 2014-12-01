@@ -5,8 +5,6 @@
 //     For all details and documentation:
 //     http://backbonejs.org
 
-console.log('backbone load');
-
 (function(root, factory) {
 
   // Set up Backbone appropriately for the environment. Start with AMD.
