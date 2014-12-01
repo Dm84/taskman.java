@@ -109,10 +109,9 @@ define(	['jquery', 'backbone', 'marionette', 'handlebars', 'jquery_ui'],
 			
 			initialize: function (options) {
 				this.hasSeparator = options.hasSeparator;
-				this.span = options.span;
-				
-								
-			},			
+				this.span = options.span;								
+			},
+			
 			events: {
 				"click": function () {
 					$('html, body').animate({
@@ -128,12 +127,11 @@ define(	['jquery', 'backbone', 'marionette', 'handlebars', 'jquery_ui'],
 					this.$el.addClass('task-item_separator_true');
 				}
 				
-				console.log(this.span);
-				
 				if (this.span.length) {					
 					var span = this.span;					
 					this.$el.html(function(i, html) {						
-						return html.replace(new RegExp(span, 'i'), "<span>\\$1</span>");
+						return html.replace(
+								new RegExp(span, 'i'), '<span class=\"item-match\">$&</span>');
 					});					
 				}				
 			}		
@@ -195,10 +193,11 @@ define(	['jquery', 'backbone', 'marionette', 'handlebars', 'jquery_ui'],
 					
 					var filtered = this.mainCollection.filter(function (item) {
 						return item.get('description').match(new RegExp(query, 'i'));
-					});		
+					});					
 					
-					
-					this.collection.set(filtered);					
+					this.collection.reset();
+					this.collection.set(filtered);
+					//this.collection.trigger("change");
 				},
 				"focus @ui.entry": function (e) {
 					this.ui.popup_search.fadeIn();
