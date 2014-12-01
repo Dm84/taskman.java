@@ -8,7 +8,10 @@ define(	['jquery', 'backbone', 'marionette', 'handlebars', 'jquery_ui'],
 		
 		var app = new Backbone.Marionette.Application();
 		
-		app.endpointUrl = '/artifact/endpoint/tasks'; 
+		
+		app.endpointUrl = location.host === 'localhost:8080' ? '/artifact/endpoint/tasks' :
+			'/endpoint/tasks'; 
+		
 		app.addRegions({tasksRegion: "#task-list", headerRegion: '#header'});
 				
 		Handlebars.registerHelper('dateFormat', function(date) {
@@ -44,7 +47,7 @@ define(	['jquery', 'backbone', 'marionette', 'handlebars', 'jquery_ui'],
 //			},
 			
 			model: app.TaskModel,			
-			urlRoot: 'http://localhost:8080',
+			urlRoot: location.host,
 			comparator: function (task) {
 				return task.get('deadline');
 			}
