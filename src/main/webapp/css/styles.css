@@ -196,6 +196,16 @@ input {
 	color: #b8b8b8
 }
 
+.chart { 
+	display: block;
+	margin: 60px auto 0;
+}
+
+.chart-wrap {
+	
+	
+}
+
 @media screen and (max-width: 420px) {
 	.content {
 		font-size: 20px;

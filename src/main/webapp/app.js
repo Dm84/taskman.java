@@ -1,6 +1,7 @@
 define(	['jquery', 'backbone', 'marionette', 'handlebars', 'jquery_ui', 
-       	 'js/collections/tasks', 'js/views/task_list', 'js/views/header'], function ($, Backbone, Marionette, Handlebars, jquery_ui, 
-       			 TaskListModel, TaskListView, HeaderView)
+       	 'js/collections/tasks', 'js/views/task_list', 'js/views/header'], 
+       	 function (	$, Backbone, Marionette, Handlebars, jquery_ui, 
+       			 	TaskCollection, TaskListView, HeaderView)
 {
 	Marionette.TemplateCache.prototype.compileTemplate = function (rawTemplate) {
 	    return Handlebars.compile(rawTemplate);
@@ -28,8 +29,9 @@ define(	['jquery', 'backbone', 'marionette', 'handlebars', 'jquery_ui',
 	
 	app.addRegions({tasksRegion: "#task-list", headerRegion: '#header'});
 	
-	app.taskList = new TaskListModel({}, {url: app.endpointUrl});
-	app.searchTaskList = new TaskListModel({}, {url: app.endpointUrl});
+	app.taskList = new TaskCollection([], {url: app.endpointUrl});	
+	
+	app.searchTaskList = new TaskCollection([], {url: app.endpointUrl});
 	app.listView = new TaskListView({ collection: app.taskList });
 	
 	app.headerView = new HeaderView({ 
@@ -38,9 +40,10 @@ define(	['jquery', 'backbone', 'marionette', 'handlebars', 'jquery_ui',
 	});
 	
 	app.on("start", function () {					
-			app.taskList.fetch();			
-			app.tasksRegion.show(app.listView);
-			app.headerRegion.show(app.headerView);
+			
+		app.taskList.fetch();					
+		app.tasksRegion.show(app.listView);
+		app.headerRegion.show(app.headerView);
 	});		
 	
 	return app;

@@ -9,20 +9,12 @@ define(['jquery', 'marionette'], function ($, Marionette) {
 			
 			var $dateEl = $('.task-date', this.$el);
 
-			if (this.model.get('completed') === true) {
-				$dateEl.addClass('task-date_status_completed');
-			} else {
-				if (overdue > 0) {
-					$dateEl.addClass('task-date_status_overdue');										
-				} else {
-					var dayPeriodMs = 24 * 60 * 60 * 1000;
-					if (-overdue < dayPeriodMs) {
-						$dateEl.addClass('task-date_status_todo');
-					} else {
-						$dateEl.addClass('task-date_status_future');
-					}
-				}
-			}
+			switch (this.model.state) {
+				case 'completed': $dateEl.addClass('task-date_status_completed'); break;
+				case 'overdue': $dateEl.addClass('task-date_status_overdue'); break;
+				case 'today': $dateEl.addClass('task-date_status_todo'); break;
+				case 'todo': $dateEl.addClass('task-date_status_future'); break;
+			}			
 		}
 	});
 	

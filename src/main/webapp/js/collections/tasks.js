@@ -1,12 +1,10 @@
 define(['backbone', 'js/models/task'], function (Backbone, TaskModel) {
 
-	var Model = Backbone.Collection.extend({			
+	var Collection = Backbone.Collection.extend({			
 		model: TaskModel,			
 		urlRoot: location.host,
 		
 		initialize: function (attributes, options) {
-			
-			console.log('ok', options);
 			this.url = options.url;
 		},		
 		comparator: function (task) {
@@ -14,5 +12,5 @@ define(['backbone', 'js/models/task'], function (Backbone, TaskModel) {
 		}
 	});
 	
-	return Model;
+	return Collection;
 });
