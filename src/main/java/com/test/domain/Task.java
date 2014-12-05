@@ -14,6 +14,7 @@ public class Task {
 	
     @Column(name="description")
     @NotNull
+    @Size(min=1)
 	private String description;    
     
     @Column(name="deadline")

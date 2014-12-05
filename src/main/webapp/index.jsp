@@ -56,7 +56,7 @@
 			<div class="header" id="header"></div>					
 			<div id="task-list" class="task-list"></div>
 			<div class="chart-wrap">
-				<canvas id="myChart" class="chart" width="290px" height="290px"></canvas>
+				<canvas id="myChart" class="chart"></canvas>
 			</div>
 			
 		</div>		
