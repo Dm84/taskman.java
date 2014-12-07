@@ -203,7 +203,7 @@ input {
 .chart-wrap {
 	
 	display: block;
-	margin: 60px auto 0;
+	margin: 60px auto 30px;
 	width: 290px;
 	height: 290px;
 	overflow: hidden;

@@ -44,9 +44,10 @@ define(['marionette', 'js/views/task_main', 'chart'], function (Marionette, Main
 			for (item in sectors) {
 				data.push(sectors[item]);
 			}
-			console.log(data);
-			
-			var ctx = document.getElementById("myChart").getContext("2d");			
+						
+			var ctx = document.getElementById("myChart").getContext("2d");
+			ctx.canvas.width = 290;
+			ctx.canvas.height = 290;
 		    // Use Chart.js as normal here.
 			
 			var myDoughnutChart = new Chart(ctx).Doughnut(data, {

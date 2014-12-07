@@ -12,12 +12,11 @@ public class Task {
     @GeneratedValue
     private Integer id = 0;	
 	
-    @Column(name="description")
-    @NotNull
+    @Column(name="description", nullable=false)    
     @Size(min=1)
 	private String description;    
     
-    @Column(name="deadline")
+    @Column(name="deadline", nullable=false)
     @Future
     private java.util.Date deadline;
     
