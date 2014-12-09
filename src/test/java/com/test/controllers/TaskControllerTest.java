@@ -4,7 +4,8 @@ import java.sql.Timestamp;
 
 import org.junit.*;
 
-import com.test.domain.*;
+import com.taskman.domain.*;
+import com.taskman.controllers.*;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;

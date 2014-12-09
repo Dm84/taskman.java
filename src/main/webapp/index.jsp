@@ -48,7 +48,8 @@
 	
 	<script type="text/x-handlebars-template" id="search-separator-template">
 		<div class="task-item task-item_block_search">
-		<div class="item-separator item-separator_block_search"></div>
+			<div class="item-separator item-separator_block_search"></div>
+		</div>
 	</script>
 
 	<div class="container">
