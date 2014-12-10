@@ -22,7 +22,7 @@ public class TaskService {
 	 * 
 	 * @param task
 	 */
-	public int add(Task task) {
+	public Task add(Task task) {
 		return taskDao.create(task);
 	}
 

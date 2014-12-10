@@ -44,9 +44,8 @@ public class TaskController {
 	}
 		
 	@RequestMapping(value = "/tasks", method = RequestMethod.POST, consumes="application/json")
-	public String add(@RequestBody Task task) {	
-		service.add(task);
-		return okResponse;
+	public Task add(@RequestBody Task task) {		
+		return service.add(task);
 	}
 	
 	@RequestMapping(value = "/tasks", params = "query")

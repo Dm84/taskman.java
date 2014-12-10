@@ -42,9 +42,9 @@ class TaskDao implements ITaskDao {
 	/**
 	 * Сохраняет новую задачу
 	 */
-	public int create(Task task) {		
+	public Task create(Task task) {		
 		getSession().save(task);	
-		return task.getId();
+		return task;
 	}	
 	
 	/**

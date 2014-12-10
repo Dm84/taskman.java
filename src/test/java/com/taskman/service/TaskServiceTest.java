@@ -30,8 +30,8 @@ public class TaskServiceTest {
 		testTask.setDescription("test desc");
 		testTask.setDeadline(deadline);
 		
-		int id = service.add(testTask);		
-		Assert.assertNotEquals(id, 0);
+		Task newTask = service.add(testTask);		
+		Assert.assertNotEquals(newTask.getId(), new Integer(0));
 	}
 	
 	@Test

@@ -15,7 +15,7 @@
         http://www.springframework.org/schema/tx/spring-tx.xsd">
 
  	<mvc:annotation-driven />	
-	<context:component-scan base-package="com.test.controllers" />
+	<context:component-scan base-package="com.taskman.controllers" />
  
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -37,7 +37,7 @@
 	<bean id="sessionFactory"
 		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
 		<property name="dataSource" ref="dataSource"/>
-		<property name="packagesToScan" value="com.test.domain"/>		
+		<property name="packagesToScan" value="com.taskman.domain"/>		
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop> 
@@ -52,11 +52,11 @@
 	    <property name="sessionFactory" ref="sessionFactory" />	    
 	</bean>	
 	
-	<bean id="taskDao" class="com.test.dao.TaskDao">
+	<bean id="taskDao" class="com.taskman.dao.TaskDao">
 		<constructor-arg ref="sessionFactory"/>
 	</bean>
 		
-	<bean id="taskService" class="com.test.service.TaskService">
+	<bean id="taskService" class="com.taskman.service.TaskService">
 		<qualifier value="taskService"/>
 		<constructor-arg ref="taskDao"/>
 	</bean>
@@ -84,12 +84,12 @@
 
 	<bean class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"/>	
 
-	<bean name="/task/*" id="taskController" class="com.test.controllers.TaskController">
+	<bean name="/task/*" id="taskController" class="com.taskman.controllers.TaskController">
 		<constructor-arg ref="taskDao"/>
 	</bean>
 
  	
 	<bean class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"/>	
-	<bean name="/main*" class="com.test.controllers.MainController" />
+	<bean name="/main*" class="com.taskman.controllers.MainController" />
  -->				
 </beans>
