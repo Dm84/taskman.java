@@ -64,36 +64,4 @@
 		<qualifier value="taskService"/>
 		<constructor-arg ref="taskDao"/>
 	</bean>
-
-
-		
-
-<!--
-	<bean id="transactionManager" class="org.springframework.transaction.jta.JtaTransactionManager">	    
-	</bean>	
-
-
-	<bean id="jacksonMessageConverter"
-		class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter"></bean>
-	<bean
-		class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
-		<property name="messageConverters">
-			<list>
-				<ref bean="jacksonMessageConverter" />
-			</list>
-		</property>
-	</bean>		
-
-
-
-	<bean class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"/>	
-
-	<bean name="/task/*" id="taskController" class="com.taskman.controllers.TaskController">
-		<constructor-arg ref="taskDao"/>
-	</bean>
-
- 	
-	<bean class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"/>	
-	<bean name="/main*" class="com.taskman.controllers.MainController" />
- -->				
 </beans>
