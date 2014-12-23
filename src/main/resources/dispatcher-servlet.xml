@@ -17,6 +17,10 @@
  	<mvc:annotation-driven />	
 	<context:component-scan base-package="com.taskman.controllers" />
  
+ 	<bean id="placeholderConfig" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">    
+		<property name="location" value="classpath:config.properties"></property>
+	</bean>
+ 
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix">
@@ -28,9 +32,9 @@
 	</bean>
 	
 	<bean id="dataSource" class="com.mysql.jdbc.jdbc2.optional.MysqlDataSource">
-		<property name="URL" value="jdbc:mysql://srv7.host-food.ru:3306/h70115_quiz"/>
-		<property name="User" value="h70115_quiz"/>
-		<property name="Password" value="Hx7Y181x" />
+		<property name="URL" value="${url}"/>
+		<property name="User" value="${user}"/>
+		<property name="Password" value="${password}"/>
 	</bean>
 
 	
