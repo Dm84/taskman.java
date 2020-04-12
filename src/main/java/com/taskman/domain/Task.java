@@ -4,55 +4,55 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 
 @Entity
-@Table(name="task")
+@Table(name = "task")
 public class Task {
-	
+
     @Id
-    @Column(name="id")
+    @Column(name = "id")
     @GeneratedValue
-    private Integer id = 0;	
-	
-    @Column(name="description", nullable=false)    
-    @Size(min=1)
-	private String description;    
-    
-    @Column(name="deadline", nullable=false)
+    private Integer id = 0;
+
+    @Column(name = "description", nullable = false)
+    @Size(min = 1)
+    private String description;
+
+    @Column(name = "deadline", nullable = false)
     @Future
     private java.util.Date deadline;
-    
-    @Column(name="completed")
+
+    @Column(name = "completed")
     private boolean completed = false;
-    
-	public Integer getId() {
-		return id;
-	}
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public java.util.Date getDeadline() {
-		return deadline;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public void setDeadline(long deadline) {
-		this.deadline = new java.sql.Timestamp(deadline);
-	}
+    public java.util.Date getDeadline() {
+        return deadline;
+    }
 
-	public boolean isCompleted() {
-		return completed;
-	}
+    public void setDeadline(long deadline) {
+        this.deadline = new java.sql.Timestamp(deadline);
+    }
 
-	public void setCompleted(boolean completed) {
-		this.completed = completed;
-	} 
-	
+    public boolean isCompleted() {
+        return completed;
+    }
+
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
+    }
+
 }
