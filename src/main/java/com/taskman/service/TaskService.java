@@ -10,10 +10,10 @@ import java.util.List;
 @Service
 public class TaskService {
 
-    private final ITaskRepository taskDao;
+    private final ITaskRepository taskRepository;
 
-    public TaskService(ITaskRepository taskDao) {
-        this.taskDao = taskDao;
+    public TaskService(ITaskRepository taskRepository) {
+        this.taskRepository = taskRepository;
     }
 
     /**
@@ -22,7 +22,7 @@ public class TaskService {
      * @param task
      */
     public Task add(Task task) {
-        return taskDao.create(task);
+        return taskRepository.create(task);
     }
 
     /**
@@ -31,7 +31,7 @@ public class TaskService {
      * @param id
      */
     public void complete(Integer id) {
-        taskDao.complete(id);
+        taskRepository.complete(id);
     }
 
     /**
@@ -40,7 +40,7 @@ public class TaskService {
      * @return
      */
     public List findAll() {
-        return taskDao.findAll();
+        return taskRepository.findAll();
     }
 
     /**
@@ -50,6 +50,6 @@ public class TaskService {
      * @return
      */
     public List find(String query) {
-        return taskDao.find(query);
+        return taskRepository.find(query);
     }
 }
