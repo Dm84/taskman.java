@@ -1,4 +1,4 @@
-package com.taskman.dao;
+package com.taskman.repository;
 
 import java.util.List;
 import java.util.ListIterator;
@@ -13,16 +13,16 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.transaction.annotation.*;
 
-import com.taskman.domain.Task;
+import com.taskman.repository.entity.Task;
 
 @Repository
 @EnableTransactionManagement
 @Transactional
-class TaskDao implements ITaskDao {
+class TaskRepository implements ITaskRepository {
 
     private final SessionFactory factory;
 
-    TaskDao(SessionFactory factory) {
+    TaskRepository(SessionFactory factory) {
         this.factory = factory;
     }
 

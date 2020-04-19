@@ -1,8 +1,7 @@
 package com.taskman.service;
 
-import com.taskman.dao.*;
-import com.taskman.domain.*;
-
+import com.taskman.repository.*;
+import com.taskman.repository.entity.Task;
 import org.springframework.stereotype.*;
 
 import java.util.Map;
@@ -11,9 +10,9 @@ import java.util.List;
 @Service
 public class TaskService {
 
-    private final ITaskDao taskDao;
+    private final ITaskRepository taskDao;
 
-    public TaskService(ITaskDao taskDao) {
+    public TaskService(ITaskRepository taskDao) {
         this.taskDao = taskDao;
     }
 

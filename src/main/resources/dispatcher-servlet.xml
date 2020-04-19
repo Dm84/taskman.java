@@ -56,7 +56,7 @@
 	    <property name="sessionFactory" ref="sessionFactory" />	    
 	</bean>	
 	
-	<bean id="taskDao" class="com.taskman.dao.TaskDao">
+	<bean id="taskDao" class="com.taskman.repository.TaskRepository">
 		<constructor-arg ref="sessionFactory"/>
 	</bean>
 		

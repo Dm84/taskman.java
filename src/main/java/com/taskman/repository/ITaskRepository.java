@@ -1,10 +1,10 @@
-package com.taskman.dao;
+package com.taskman.repository;
 
 import java.util.List;
 
-import com.taskman.domain.Task;
+import com.taskman.repository.entity.Task;
 
-public interface ITaskDao {
+public interface ITaskRepository {
 
     Task create(Task task);
 

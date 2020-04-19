@@ -1,4 +1,4 @@
-package com.taskman.domain;
+package com.taskman.repository.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;

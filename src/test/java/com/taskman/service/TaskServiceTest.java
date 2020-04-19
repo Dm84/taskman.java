@@ -8,8 +8,7 @@ import org.junit.Assert;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import com.taskman.domain.Task;
-import com.taskman.service.*;
+import com.taskman.repository.entity.Task;
 
 public class TaskServiceTest {
 	

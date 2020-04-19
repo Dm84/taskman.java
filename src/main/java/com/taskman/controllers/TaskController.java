@@ -1,15 +1,10 @@
 package com.taskman.controllers;
 
-import javassist.compiler.ast.Pair;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.AbstractController;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -21,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.taskman.domain.Task;
+import com.taskman.repository.entity.Task;
 import com.taskman.service.TaskService;
 
 
