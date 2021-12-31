@@ -1,11 +1,6 @@
 package com.taskman.controllers;
 
-import java.sql.Timestamp;
-
 import com.taskman.repository.entity.Task;
-
-import com.taskman.domain.*;
-
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 

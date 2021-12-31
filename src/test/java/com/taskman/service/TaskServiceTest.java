@@ -10,8 +10,8 @@ public class TaskServiceTest {
 	final private int testId = 1;
 	final private long deadline = 1445299200000l;
 	
-	private ApplicationContext appContext;
-	private TaskService service;
+	private final ApplicationContext appContext;
+	private final TaskService service;
 	
 	public TaskServiceTest() {		
 		appContext = new ClassPathXmlApplicationContext("dispatcher-servlet.xml");		
@@ -25,7 +25,7 @@ public class TaskServiceTest {
 		testTask.setDeadline(deadline);
 		
 		Task newTask = service.add(testTask);		
-		Assert.assertNotEquals(newTask.getId(), new Integer(0));
+		Assert.assertNotEquals(newTask.getId(), Integer.valueOf(0));
 	}
 	
 	@Test
