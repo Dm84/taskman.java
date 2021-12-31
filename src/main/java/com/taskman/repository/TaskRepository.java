@@ -1,16 +1,15 @@
 package com.taskman.repository;
 
-import java.util.*;
-import java.util.stream.Collectors;
-
-import com.taskman.service.ITaskRepository;
-import org.springframework.stereotype.*;
-import org.hibernate.SessionFactory;
-import org.hibernate.Session;
-import org.hibernate.criterion.Restrictions;
-import org.springframework.transaction.annotation.*;
-
 import com.taskman.repository.entity.Task;
+import com.taskman.service.ITaskRepository;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+
+import java.util.Collection;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Repository
 @EnableTransactionManagement
@@ -50,7 +49,6 @@ class TaskRepository implements ITaskRepository {
      * @return task index
      */
     private Map<Integer, Task> IndexList(Collection<Task> taskCollection) {
-        final Map<Integer, Task> map = new HashMap<>();
         return taskCollection.stream().collect(Collectors.toMap(Task::getId, task -> task));
     }
 
@@ -60,17 +58,26 @@ class TaskRepository implements ITaskRepository {
      * @return get all tasks having
      */
     public Collection<Task> findAll() {
-        return getSession().createCriteria(Task.class).list();
+        var builder = getSession().getCriteriaBuilder();
+        var query = builder.createQuery(Task.class);
+        var all = query.select(query.from(Task.class));
+        return getSession().createQuery(all).getResultList();
     }
 
     /**
      * Ищет задачи по части описания
      *
-     * @param query input string
+     * @param entry entry that description contains
      * @return tasks matched string
      */
-    public Collection<Task> find(String query) {
-        return getSession().createCriteria(Task.class).add(
-                Restrictions.like("description", "%" + query + "%")).list();
+    public Collection<Task> find(String entry) {
+        var builder = getSession().getCriteriaBuilder();
+        var query = builder.createQuery(Task.class);
+        var root = query.from(Task.class);
+        var all = query
+                .select(root)
+                .where(builder.like(root.get("description"), "%" + entry + "%"));
+
+        return getSession().createQuery(all).getResultList();
     }
 }
