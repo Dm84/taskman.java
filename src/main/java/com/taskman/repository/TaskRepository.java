@@ -1,12 +1,9 @@
 package com.taskman.repository;
 
-import java.util.List;
-import java.util.ListIterator;
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.HashMap;
-import java.util.Collections;
+import java.util.*;
+import java.util.stream.Collectors;
 
+import com.taskman.service.ITaskRepository;
 import org.springframework.stereotype.*;
 import org.hibernate.SessionFactory;
 import org.hibernate.Session;
@@ -50,37 +47,30 @@ class TaskRepository implements ITaskRepository {
     /**
      * Индексирует список задач
      *
-     * @param iter
-     * @return
+     * @param taskCollection input collection
+     * @return task index
      */
-    private Map<Integer, Task> IndexList(ListIterator iter) {
-        Map<Integer, Task> map = new HashMap<Integer, Task>();
-        while (iter.hasNext()) {
-            Object obj = iter.next();
-            if (obj instanceof Task) {
-                Task item = (Task) obj;
-                map.put(item.getId(), item);
-            }
-        }
-        return map;
+    private Map<Integer, Task> IndexList(Collection<Task> taskCollection) {
+        final Map<Integer, Task> map = new HashMap<>();
+        return taskCollection.stream().collect(Collectors.toMap(Task::getId, task -> task));
     }
 
     /**
      * Возвращает список всех задач
      *
-     * @return
+     * @return get all tasks having
      */
-    public List findAll() {
+    public Collection<Task> findAll() {
         return getSession().createCriteria(Task.class).list();
     }
 
     /**
      * Ищет задачи по части описания
      *
-     * @param query
-     * @return
+     * @param query input string
+     * @return tasks matched string
      */
-    public List find(String query) {
+    public Collection<Task> find(String query) {
         return getSession().createCriteria(Task.class).add(
                 Restrictions.like("description", "%" + query + "%")).list();
     }

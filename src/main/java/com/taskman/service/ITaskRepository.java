@@ -1,6 +1,6 @@
-package com.taskman.repository;
+package com.taskman.service;
 
-import java.util.List;
+import java.util.Collection;
 
 import com.taskman.repository.entity.Task;
 
@@ -10,8 +10,8 @@ public interface ITaskRepository {
 
     void complete(Integer id);
 
-    List findAll();
+    Collection<Task> findAll();
 
-    List find(String query);
+    Collection<Task> find(String query);
 }
 

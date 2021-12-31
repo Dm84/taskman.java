@@ -1,6 +1,6 @@
 package com.taskman.service;
 
-import java.sql.Timestamp;
+import java.util.Collection;
 
 import org.junit.Test;
 import org.junit.Assert;
@@ -40,13 +40,13 @@ public class TaskServiceTest {
 	
 	@Test
 	public void listAll() {
-		java.util.List tasks = service.findAll();		
+		Collection<Task> tasks = service.findAll();
 		Assert.assertNotEquals(tasks.size(), 0);
 	}
 	
 	@Test
 	public void find() {
-		java.util.List tasks = service.find("esc");		
+		Collection<Task> tasks = service.find("esc");
 		Assert.assertNotEquals(tasks.size(), 0);
 	}
 }

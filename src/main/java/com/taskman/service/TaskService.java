@@ -1,11 +1,9 @@
 package com.taskman.service;
 
-import com.taskman.repository.*;
 import com.taskman.repository.entity.Task;
 import org.springframework.stereotype.*;
 
-import java.util.Map;
-import java.util.List;
+import java.util.Collection;
 
 @Service
 public class TaskService {
@@ -19,7 +17,7 @@ public class TaskService {
     /**
      * Persists new task
      *
-     * @param task
+     * @param task input task
      */
     public Task add(Task task) {
         return taskRepository.create(task);
@@ -28,7 +26,7 @@ public class TaskService {
     /**
      * Завершить задачу
      *
-     * @param id
+     * @param id id of task
      */
     public void complete(Integer id) {
         taskRepository.complete(id);
@@ -37,19 +35,19 @@ public class TaskService {
     /**
      * Перечислить задачи
      *
-     * @return
+     * @return all of task what we have
      */
-    public List findAll() {
+    public Collection<Task> findAll() {
         return taskRepository.findAll();
     }
 
     /**
      * Найти задачи по части описания
      *
-     * @param query
-     * @return
+     * @param query description subsequence for search
+     * @return item list
      */
-    public List find(String query) {
+    public Collection<Task> find(String query) {
         return taskRepository.find(query);
     }
 }

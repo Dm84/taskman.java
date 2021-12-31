@@ -11,10 +11,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.apache.log4j.Logger;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import com.taskman.repository.entity.Task;
 import com.taskman.service.TaskService;
@@ -44,7 +41,7 @@ public class TaskController {
     }
 
     @RequestMapping(value = "/tasks", params = "query")
-    public List search(String query) {
+    public Collection<Task> search(String query) {
         return service.find(query);
     }
 
@@ -55,7 +52,7 @@ public class TaskController {
     }
 
     @RequestMapping(value = "/tasks", method = RequestMethod.GET)
-    public List list() {
+    public Collection<Task> list() {
         return service.findAll();
     }
 
@@ -72,10 +69,10 @@ public class TaskController {
         return new ValidationViolationResponse(exception);
     }
 
-    class ErrorResponseObject {
+    static class ErrorResponseObject {
     }
 
-    class ErrorResponse {
+    static class ErrorResponse {
 
         public String error;
         public String errorType;
@@ -86,14 +83,14 @@ public class TaskController {
         }
     }
 
-    class GenericErrorResponse extends ErrorResponse {
+    static class GenericErrorResponse extends ErrorResponse {
 
         public GenericErrorResponse(Exception exception) {
             super(exception.getMessage(), "generic");
         }
     }
 
-    class ValidationViolationResponse extends ErrorResponse {
+    static class ValidationViolationResponse extends ErrorResponse {
 
         public Map<String, String> violations;
 
