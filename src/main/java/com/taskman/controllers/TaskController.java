@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.apache.log4j.Logger;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import com.taskman.repository.entity.Task;
 import com.taskman.service.TaskService;
@@ -84,7 +85,6 @@ public class TaskController {
     }
 
     static class GenericErrorResponse extends ErrorResponse {
-
         public GenericErrorResponse(Exception exception) {
             super(exception.getMessage(), "generic");
         }
@@ -96,15 +96,14 @@ public class TaskController {
 
         public ValidationViolationResponse(ConstraintViolationException exception) {
             super(exception.getMessage(), "validation_violation");
-            violations = new HashMap<String, String>();
 
             Set<ConstraintViolation<?>> violationSet =
                     exception.getConstraintViolations();
-            for (ConstraintViolation<?> violation : violationSet) {
-                String name = violation.getPropertyPath().toString();
-                String desc = violation.getMessage();
-                violations.put(name, desc);
-            }
+
+            violations = violationSet.stream().collect(Collectors.toMap(
+                    violation -> violation.getPropertyPath().toString(),
+                    ConstraintViolation::getMessage
+            ));
         }
     }
 

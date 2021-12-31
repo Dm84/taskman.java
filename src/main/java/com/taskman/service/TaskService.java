@@ -1,7 +1,7 @@
 package com.taskman.service;
 
 import com.taskman.repository.entity.Task;
-import org.springframework.stereotype.*;
+import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 

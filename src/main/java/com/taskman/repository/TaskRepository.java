@@ -14,7 +14,6 @@ import com.taskman.repository.entity.Task;
 
 @Repository
 @EnableTransactionManagement
-@Transactional
 class TaskRepository implements ITaskRepository {
 
     private final SessionFactory factory;
