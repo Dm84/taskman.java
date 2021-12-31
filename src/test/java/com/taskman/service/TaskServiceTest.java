@@ -1,14 +1,9 @@
 package com.taskman.service;
 
-import java.util.Collection;
-
-import org.junit.Test;
 import org.junit.Assert;
-
+import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-
-import com.taskman.repository.entity.Task;
 
 public class TaskServiceTest {
 	
@@ -25,7 +20,7 @@ public class TaskServiceTest {
 	
 	@Test
 	public void add() {		
-		Task testTask = new Task();		
+		Task testTask = new com.taskman.repository.entity.Task();
 		testTask.setDescription("test desc");
 		testTask.setDeadline(deadline);
 		
@@ -40,13 +35,13 @@ public class TaskServiceTest {
 	
 	@Test
 	public void listAll() {
-		Collection<Task> tasks = service.findAll();
+		var tasks = service.findAll();
 		Assert.assertNotEquals(tasks.size(), 0);
 	}
 	
 	@Test
 	public void find() {
-		Collection<Task> tasks = service.find("esc");
+		var tasks = service.find("esc");
 		Assert.assertNotEquals(tasks.size(), 0);
 	}
 }

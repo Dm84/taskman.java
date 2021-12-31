@@ -5,7 +5,7 @@ import javax.validation.constraints.*;
 
 @Entity
 @Table(name = "task")
-public class Task {
+public class Task implements com.taskman.service.Task {
 
     @Id
     @Column(name = "id")
@@ -23,34 +23,42 @@ public class Task {
     @Column(name = "completed")
     private boolean completed = false;
 
+    @Override
     public Integer getId() {
         return id;
     }
 
+    @Override
     public void setId(Integer id) {
         this.id = id;
     }
 
+    @Override
     public String getDescription() {
         return description;
     }
 
+    @Override
     public void setDescription(String description) {
         this.description = description;
     }
 
+    @Override
     public java.util.Date getDeadline() {
         return deadline;
     }
 
+    @Override
     public void setDeadline(long deadline) {
         this.deadline = new java.sql.Timestamp(deadline);
     }
 
+    @Override
     public boolean isCompleted() {
         return completed;
     }
 
+    @Override
     public void setCompleted(boolean completed) {
         this.completed = completed;
     }

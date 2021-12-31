@@ -1,7 +1,6 @@
 package com.taskman.repository;
 
-import com.taskman.repository.entity.Task;
-import com.taskman.service.ITaskRepository;
+import com.taskman.service.Task;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
@@ -13,7 +12,7 @@ import java.util.stream.Collectors;
 
 @Repository
 @EnableTransactionManagement
-class TaskRepository implements ITaskRepository {
+class TaskRepository implements com.taskman.service.TaskRepository {
 
     private final SessionFactory factory;
 

@@ -1,6 +1,5 @@
 package com.taskman.service;
 
-import com.taskman.repository.entity.Task;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -8,9 +7,9 @@ import java.util.Collection;
 @Service
 public class TaskService {
 
-    private final ITaskRepository taskRepository;
+    private final TaskRepository taskRepository;
 
-    public TaskService(ITaskRepository taskRepository) {
+    public TaskService(TaskRepository taskRepository) {
         this.taskRepository = taskRepository;
     }
 
@@ -37,7 +36,7 @@ public class TaskService {
      *
      * @return all of task what we have
      */
-    public Collection<Task> findAll() {
+    public Collection<? extends Task> findAll() {
         return taskRepository.findAll();
     }
 
@@ -47,7 +46,7 @@ public class TaskService {
      * @param query description subsequence for search
      * @return item list
      */
-    public Collection<Task> find(String query) {
+    public Collection<? extends Task> find(String query) {
         return taskRepository.find(query);
     }
 }

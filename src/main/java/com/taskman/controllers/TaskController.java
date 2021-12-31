@@ -14,7 +14,7 @@ import org.apache.log4j.Logger;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import com.taskman.repository.entity.Task;
+import com.taskman.service.Task;
 import com.taskman.service.TaskService;
 
 
@@ -42,7 +42,7 @@ public class TaskController {
     }
 
     @RequestMapping(value = "/tasks", params = "query")
-    public Collection<Task> search(String query) {
+    public Collection<? extends Task> search(String query) {
         return service.find(query);
     }
 
@@ -53,7 +53,7 @@ public class TaskController {
     }
 
     @RequestMapping(value = "/tasks", method = RequestMethod.GET)
-    public Collection<Task> list() {
+    public Collection<? extends Task> list() {
         return service.findAll();
     }
 
